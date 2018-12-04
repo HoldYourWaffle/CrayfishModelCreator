@@ -33,7 +33,6 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.glu.GLU;
 import org.newdawn.slick.Color;
 
-import com.mrcrayfish.modelcreator.dialog.WelcomeDialog;
 import com.mrcrayfish.modelcreator.element.Element;
 import com.mrcrayfish.modelcreator.element.ElementManager;
 import com.mrcrayfish.modelcreator.panels.SidebarPanel;
@@ -121,8 +120,6 @@ public class ModelCreator extends JFrame {
 		
 		try {
 			Display.create();
-			
-			WelcomeDialog.show(ModelCreator.this);
 			
 			loop();
 			
