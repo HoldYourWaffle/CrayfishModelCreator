@@ -15,17 +15,15 @@ import com.mrcrayfish.modelcreator.element.ElementManager;
 import com.mrcrayfish.modelcreator.texture.TextureManager;
 import com.mrcrayfish.modelcreator.util.ComponentUtil;
 
-public class GlobalPanel extends JPanel implements IValueUpdater
-{
+public class GlobalPanel extends JPanel implements IValueUpdater {
 	private static final long serialVersionUID = 1L;
-
+	
 	private ElementManager manager;
-
+	
 	private JRadioButton ambientOcc;
 	private JButton btnParticle;
-
-	public GlobalPanel(ElementManager manager)
-	{
+	
+	public GlobalPanel(ElementManager manager) {
 		this.manager = manager;
 		setLayout(new GridLayout(2, 1, 0, 5));
 		setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(new Color(221, 221, 228), 5), "<html><b>Global Properties</b></html>"));
@@ -33,42 +31,34 @@ public class GlobalPanel extends JPanel implements IValueUpdater
 		initComponents();
 		addComponents();
 	}
-
-	public void initComponents()
-	{
+	
+	public void initComponents() {
 		ambientOcc = ComponentUtil.createRadioButton("Ambient Occlusion", "Determine the light for each element");
 		ambientOcc.setSelected(true);
-		ambientOcc.addActionListener(a -> manager.setAmbientOcc(ambientOcc.isSelected()));
-
+		ambientOcc.addActionListener(a->manager.setAmbientOcc(ambientOcc.isSelected()));
+		
 		btnParticle = new JButton("Particle");
 		btnParticle.setIcon(Icons.texture);
-		btnParticle.addActionListener(a ->
-		{
+		btnParticle.addActionListener(a-> {
 			String texture = TextureManager.display(manager);
-			if (texture != null)
-			{
+			if (texture != null) {
 				manager.setParticle(texture);
 				btnParticle.setText(texture);
 			}
 		});
 	}
-
-	public void addComponents()
-	{
+	
+	public void addComponents() {
 		add(ambientOcc);
 		add(btnParticle);
 	}
-
+	
 	@Override
-	public void updateValues(Element cube)
-	{
+	public void updateValues(Element cube) {
 		ambientOcc.setSelected(manager.getAmbientOcc());
-		if (manager.getParticle() == null)
-		{
+		if (manager.getParticle() == null) {
 			btnParticle.setText("Particle");
-		}
-		else
-		{
+		} else {
 			btnParticle.setText(manager.getParticle());
 		}
 	}

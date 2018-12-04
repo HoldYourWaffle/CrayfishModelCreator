@@ -2,24 +2,20 @@ package com.mrcrayfish.modelcreator.screenshot;
 
 import java.io.File;
 
-public class PendingScreenshot
-{
+public class PendingScreenshot {
 	private File file = null;
 	private ScreenshotCallback callback;
 	
-	public PendingScreenshot(File file, ScreenshotCallback callback)
-	{
+	public PendingScreenshot(File file, ScreenshotCallback callback) {
 		this.file = file;
 		this.callback = callback;
 	}
-
-	public File getFile()
-	{
+	
+	public File getFile() {
 		return file;
 	}
-
-	public ScreenshotCallback getCallback()
-	{
+	
+	public ScreenshotCallback getCallback() {
 		return callback;
 	}
 }

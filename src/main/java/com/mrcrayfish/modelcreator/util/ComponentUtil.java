@@ -4,10 +4,8 @@ import javax.swing.JRadioButton;
 
 import com.mrcrayfish.modelcreator.Icons;
 
-public class ComponentUtil
-{
-	public static JRadioButton createRadioButton(String name, String toolTip)
-	{
+public class ComponentUtil {
+	public static JRadioButton createRadioButton(String name, String toolTip) {
 		JRadioButton button = new JRadioButton(name);
 		button.setToolTipText(toolTip);
 		button.setIcon(Icons.light_on);

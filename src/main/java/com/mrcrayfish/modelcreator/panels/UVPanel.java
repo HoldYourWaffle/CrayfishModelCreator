@@ -25,10 +25,9 @@ import com.mrcrayfish.modelcreator.element.ElementManager;
 import com.mrcrayfish.modelcreator.element.Face;
 import com.mrcrayfish.modelcreator.util.Parser;
 
-public class UVPanel extends JPanel implements IValueUpdater
-{
+public class UVPanel extends JPanel implements IValueUpdater {
 	private static final long serialVersionUID = 1L;
-
+	
 	private ElementManager manager;
 	private JButton btnPlusX;
 	private JButton btnPlusY;
@@ -36,18 +35,17 @@ public class UVPanel extends JPanel implements IValueUpdater
 	private JTextField yStartField;
 	private JButton btnNegX;
 	private JButton btnNegY;
-
+	
 	private JButton btnPlusXEnd;
 	private JButton btnPlusYEnd;
 	private JTextField xEndField;
 	private JTextField yEndField;
 	private JButton btnNegXEnd;
 	private JButton btnNegYEnd;
-
+	
 	private DecimalFormat df = new DecimalFormat("#.#");
-
-	public UVPanel(ElementManager manager)
-	{
+	
+	public UVPanel(ElementManager manager) {
 		this.manager = manager;
 		setLayout(new GridLayout(3, 4, 4, 4));
 		setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(new Color(221, 221, 228), 5), "<html><b>UV</b></html>"));
@@ -56,16 +54,15 @@ public class UVPanel extends JPanel implements IValueUpdater
 		initProperties();
 		addComponents();
 	}
-
-	public void initComponents()
-	{
+	
+	public void initComponents() {
 		btnPlusX = new JButton(Icons.arrow_up);
 		btnPlusY = new JButton(Icons.arrow_up);
 		xStartField = new JTextField();
 		yStartField = new JTextField();
 		btnNegX = new JButton(Icons.arrow_down);
 		btnNegY = new JButton(Icons.arrow_down);
-
+		
 		btnPlusXEnd = new JButton(Icons.arrow_up);
 		btnPlusYEnd = new JButton(Icons.arrow_up);
 		xEndField = new JTextField();
@@ -73,38 +70,30 @@ public class UVPanel extends JPanel implements IValueUpdater
 		btnNegXEnd = new JButton(Icons.arrow_down);
 		btnNegYEnd = new JButton(Icons.arrow_down);
 	}
-
-	public void initProperties()
-	{
+	
+	public void initProperties() {
 		Font defaultFont = new Font("SansSerif", Font.BOLD, 20);
 		xStartField.setSize(new Dimension(62, 30));
 		xStartField.setFont(defaultFont);
 		xStartField.setHorizontalAlignment(SwingConstants.CENTER);
-		xStartField.addKeyListener(new KeyAdapter()
-		{
+		xStartField.addKeyListener(new KeyAdapter() {
 			@Override
-			public void keyPressed(KeyEvent e)
-			{
-				if (e.getKeyCode() == KeyEvent.VK_ENTER)
-				{
-					if (manager.getSelectedElement() != null)
-					{
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					if (manager.getSelectedElement() != null) {
 						Face face = manager.getSelectedElement().getSelectedFace();
 						face.setStartU(Parser.parseDouble(xStartField.getText(), face.getStartU()));
 						face.updateEndUV();
 						manager.updateValues();
 					}
-
+					
 				}
 			}
 		});
-		xStartField.addFocusListener(new FocusAdapter()
-		{
+		xStartField.addFocusListener(new FocusAdapter() {
 			@Override
-			public void focusLost(FocusEvent e)
-			{
-				if (manager.getSelectedElement() != null)
-				{
+			public void focusLost(FocusEvent e) {
+				if (manager.getSelectedElement() != null) {
 					Face face = manager.getSelectedElement().getSelectedFace();
 					face.setStartU(Parser.parseDouble(xStartField.getText(), face.getStartU()));
 					face.updateEndUV();
@@ -112,18 +101,14 @@ public class UVPanel extends JPanel implements IValueUpdater
 				}
 			}
 		});
-		xStartField.addMouseWheelListener(new MouseAdapter()
-		{
+		xStartField.addMouseWheelListener(new MouseAdapter() {
 			@Override
-			public void mouseWheelMoved(MouseWheelEvent e)
-			{
+			public void mouseWheelMoved(MouseWheelEvent e) {
 				Element element = manager.getSelectedElement();
-				if (element != null)
-				{
+				if (element != null) {
 					Face face = element.getSelectedFace();
 					float scrollAmount = e.getUnitsToScroll() / 3;
-					if ((e.getModifiers() & ActionEvent.SHIFT_MASK) == 1)
-					{
+					if ((e.getModifiers() & ActionEvent.SHIFT_MASK) == 1) {
 						scrollAmount /= 10;
 					}
 					face.setStartU(Parser.parseDouble(xStartField.getText(), face.getStartU()) - scrollAmount);
@@ -132,19 +117,15 @@ public class UVPanel extends JPanel implements IValueUpdater
 				}
 			}
 		});
-
+		
 		yStartField.setSize(new Dimension(62, 30));
 		yStartField.setFont(defaultFont);
 		yStartField.setHorizontalAlignment(SwingConstants.CENTER);
-		yStartField.addKeyListener(new KeyAdapter()
-		{
+		yStartField.addKeyListener(new KeyAdapter() {
 			@Override
-			public void keyPressed(KeyEvent e)
-			{
-				if (e.getKeyCode() == KeyEvent.VK_ENTER)
-				{
-					if (manager.getSelectedElement() != null)
-					{
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					if (manager.getSelectedElement() != null) {
 						Face face = manager.getSelectedElement().getSelectedFace();
 						face.setStartV(Parser.parseDouble(yStartField.getText(), face.getStartV()));
 						face.updateEndUV();
@@ -153,13 +134,10 @@ public class UVPanel extends JPanel implements IValueUpdater
 				}
 			}
 		});
-		yStartField.addFocusListener(new FocusAdapter()
-		{
+		yStartField.addFocusListener(new FocusAdapter() {
 			@Override
-			public void focusLost(FocusEvent e)
-			{
-				if (manager.getSelectedElement() != null)
-				{
+			public void focusLost(FocusEvent e) {
+				if (manager.getSelectedElement() != null) {
 					Face face = manager.getSelectedElement().getSelectedFace();
 					face.setStartV(Parser.parseDouble(yStartField.getText(), face.getStartV()));
 					face.updateEndUV();
@@ -167,18 +145,14 @@ public class UVPanel extends JPanel implements IValueUpdater
 				}
 			}
 		});
-		yStartField.addMouseWheelListener(new MouseAdapter()
-		{
+		yStartField.addMouseWheelListener(new MouseAdapter() {
 			@Override
-			public void mouseWheelMoved(MouseWheelEvent e)
-			{
+			public void mouseWheelMoved(MouseWheelEvent e) {
 				Element element = manager.getSelectedElement();
-				if (element != null)
-				{
+				if (element != null) {
 					Face face = element.getSelectedFace();
 					float scrollAmount = e.getUnitsToScroll() / 3;
-					if ((e.getModifiers() & ActionEvent.SHIFT_MASK) == 1)
-					{
+					if ((e.getModifiers() & ActionEvent.SHIFT_MASK) == 1) {
 						scrollAmount /= 10;
 					}
 					face.setStartV(Parser.parseDouble(yStartField.getText(), face.getStartV()) - scrollAmount);
@@ -187,19 +161,15 @@ public class UVPanel extends JPanel implements IValueUpdater
 				}
 			}
 		});
-
+		
 		xEndField.setSize(new Dimension(62, 30));
 		xEndField.setFont(defaultFont);
 		xEndField.setHorizontalAlignment(SwingConstants.CENTER);
-		xEndField.addKeyListener(new KeyAdapter()
-		{
+		xEndField.addKeyListener(new KeyAdapter() {
 			@Override
-			public void keyPressed(KeyEvent e)
-			{
-				if (e.getKeyCode() == KeyEvent.VK_ENTER)
-				{
-					if (manager.getSelectedElement() != null)
-					{
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					if (manager.getSelectedElement() != null) {
 						Face face = manager.getSelectedElement().getSelectedFace();
 						face.setEndU(Parser.parseDouble(xEndField.getText(), face.getEndU()));
 						face.updateEndUV();
@@ -208,13 +178,10 @@ public class UVPanel extends JPanel implements IValueUpdater
 				}
 			}
 		});
-		xEndField.addFocusListener(new FocusAdapter()
-		{
+		xEndField.addFocusListener(new FocusAdapter() {
 			@Override
-			public void focusLost(FocusEvent e)
-			{
-				if (manager.getSelectedElement() != null)
-				{
+			public void focusLost(FocusEvent e) {
+				if (manager.getSelectedElement() != null) {
 					Face face = manager.getSelectedElement().getSelectedFace();
 					face.setEndU(Parser.parseDouble(xEndField.getText(), face.getEndU()));
 					face.updateEndUV();
@@ -222,18 +189,14 @@ public class UVPanel extends JPanel implements IValueUpdater
 				}
 			}
 		});
-		xEndField.addMouseWheelListener(new MouseAdapter()
-		{
+		xEndField.addMouseWheelListener(new MouseAdapter() {
 			@Override
-			public void mouseWheelMoved(MouseWheelEvent e)
-			{
+			public void mouseWheelMoved(MouseWheelEvent e) {
 				Element element = manager.getSelectedElement();
-				if (element != null)
-				{
+				if (element != null) {
 					Face face = element.getSelectedFace();
 					float scrollAmount = e.getUnitsToScroll() / 3;
-					if ((e.getModifiers() & ActionEvent.SHIFT_MASK) == 1)
-					{
+					if ((e.getModifiers() & ActionEvent.SHIFT_MASK) == 1) {
 						scrollAmount /= 10;
 					}
 					face.setEndU(Parser.parseDouble(xEndField.getText(), face.getEndU()) - scrollAmount);
@@ -242,19 +205,15 @@ public class UVPanel extends JPanel implements IValueUpdater
 				}
 			}
 		});
-
+		
 		yEndField.setSize(new Dimension(62, 30));
 		yEndField.setFont(defaultFont);
 		yEndField.setHorizontalAlignment(SwingConstants.CENTER);
-		yEndField.addKeyListener(new KeyAdapter()
-		{
+		yEndField.addKeyListener(new KeyAdapter() {
 			@Override
-			public void keyPressed(KeyEvent e)
-			{
-				if (e.getKeyCode() == KeyEvent.VK_ENTER)
-				{
-					if (manager.getSelectedElement() != null)
-					{
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					if (manager.getSelectedElement() != null) {
 						Face face = manager.getSelectedElement().getSelectedFace();
 						face.setEndV(Parser.parseDouble(yEndField.getText(), face.getEndV()));
 						face.updateEndUV();
@@ -263,13 +222,10 @@ public class UVPanel extends JPanel implements IValueUpdater
 				}
 			}
 		});
-		yEndField.addFocusListener(new FocusAdapter()
-		{
+		yEndField.addFocusListener(new FocusAdapter() {
 			@Override
-			public void focusLost(FocusEvent e)
-			{
-				if (manager.getSelectedElement() != null)
-				{
+			public void focusLost(FocusEvent e) {
+				if (manager.getSelectedElement() != null) {
 					Face face = manager.getSelectedElement().getSelectedFace();
 					face.setEndV(Parser.parseDouble(yEndField.getText(), face.getEndV()));
 					face.updateEndUV();
@@ -277,18 +233,14 @@ public class UVPanel extends JPanel implements IValueUpdater
 				}
 			}
 		});
-		yEndField.addMouseWheelListener(new MouseAdapter()
-		{
+		yEndField.addMouseWheelListener(new MouseAdapter() {
 			@Override
-			public void mouseWheelMoved(MouseWheelEvent e)
-			{
+			public void mouseWheelMoved(MouseWheelEvent e) {
 				Element element = manager.getSelectedElement();
-				if (element != null)
-				{
+				if (element != null) {
 					Face face = element.getSelectedFace();
 					float scrollAmount = e.getUnitsToScroll() / 3;
-					if ((e.getModifiers() & ActionEvent.SHIFT_MASK) == 1)
-					{
+					if ((e.getModifiers() & ActionEvent.SHIFT_MASK) == 1) {
 						scrollAmount /= 10;
 					}
 					face.setEndV(Parser.parseDouble(yEndField.getText(), face.getEndV()) - scrollAmount);
@@ -297,42 +249,32 @@ public class UVPanel extends JPanel implements IValueUpdater
 				}
 			}
 		});
-
-		btnPlusX.addActionListener(e ->
-		{
-			if (manager.getSelectedElement() != null)
-			{
+		
+		btnPlusX.addActionListener(e-> {
+			if (manager.getSelectedElement() != null) {
 				Element cube = manager.getSelectedElement();
 				Face face = cube.getSelectedFace();
-				if ((e.getModifiers() & ActionEvent.SHIFT_MASK) == 1)
-				{
+				if ((e.getModifiers() & ActionEvent.SHIFT_MASK) == 1) {
 					face.addTextureX(0.1);
-				}
-				else
-				{
+				} else {
 					face.addTextureX(1.0);
 				}
 				cube.updateEndUVs();
 				manager.updateValues();
 			}
 		});
-
+		
 		btnPlusX.setSize(new Dimension(62, 30));
 		btnPlusX.setFont(defaultFont);
 		btnPlusX.setToolTipText("<html>Increases the start U.<br><b>Hold shift for decimals</b></html>");
-
-		btnPlusY.addActionListener(e ->
-		{
-			if (manager.getSelectedElement() != null)
-			{
+		
+		btnPlusY.addActionListener(e-> {
+			if (manager.getSelectedElement() != null) {
 				Element cube = manager.getSelectedElement();
 				Face face = cube.getSelectedFace();
-				if ((e.getModifiers() & ActionEvent.SHIFT_MASK) == 1)
-				{
+				if ((e.getModifiers() & ActionEvent.SHIFT_MASK) == 1) {
 					face.addTextureY(0.1);
-				}
-				else
-				{
+				} else {
 					face.addTextureY(1.0);
 				}
 				cube.updateEndUVs();
@@ -342,19 +284,14 @@ public class UVPanel extends JPanel implements IValueUpdater
 		btnPlusY.setPreferredSize(new Dimension(62, 30));
 		btnPlusY.setFont(defaultFont);
 		btnPlusY.setToolTipText("<html>Increases the start V.<br><b>Hold shift for decimals</b></html>");
-
-		btnNegX.addActionListener(e ->
-		{
-			if (manager.getSelectedElement() != null)
-			{
+		
+		btnNegX.addActionListener(e-> {
+			if (manager.getSelectedElement() != null) {
 				Element cube = manager.getSelectedElement();
 				Face face = cube.getSelectedFace();
-				if ((e.getModifiers() & ActionEvent.SHIFT_MASK) == 1)
-				{
+				if ((e.getModifiers() & ActionEvent.SHIFT_MASK) == 1) {
 					face.addTextureX(-0.1);
-				}
-				else
-				{
+				} else {
 					face.addTextureX(-1.0);
 				}
 				cube.updateEndUVs();
@@ -364,19 +301,14 @@ public class UVPanel extends JPanel implements IValueUpdater
 		btnNegX.setSize(new Dimension(62, 30));
 		btnNegX.setFont(defaultFont);
 		btnNegX.setToolTipText("<html>Decreases the start U.<br><b>Hold shift for decimals</b></html>");
-
-		btnNegY.addActionListener(e ->
-		{
-			if (manager.getSelectedElement() != null)
-			{
+		
+		btnNegY.addActionListener(e-> {
+			if (manager.getSelectedElement() != null) {
 				Element cube = manager.getSelectedElement();
 				Face face = cube.getSelectedFace();
-				if ((e.getModifiers() & ActionEvent.SHIFT_MASK) == 1)
-				{
+				if ((e.getModifiers() & ActionEvent.SHIFT_MASK) == 1) {
 					face.addTextureY(-0.1);
-				}
-				else
-				{
+				} else {
 					face.addTextureY(-1.0);
 				}
 				cube.updateEndUVs();
@@ -386,19 +318,14 @@ public class UVPanel extends JPanel implements IValueUpdater
 		btnNegY.setSize(new Dimension(62, 30));
 		btnNegY.setFont(defaultFont);
 		btnNegY.setToolTipText("<html>Decreases the start V.<br><b>Hold shift for decimals</b></html>");
-
-		btnPlusXEnd.addActionListener(e ->
-		{
-			if (manager.getSelectedElement() != null)
-			{
+		
+		btnPlusXEnd.addActionListener(e-> {
+			if (manager.getSelectedElement() != null) {
 				Element cube = manager.getSelectedElement();
 				Face face = cube.getSelectedFace();
-				if ((e.getModifiers() & ActionEvent.SHIFT_MASK) == 1)
-				{
+				if ((e.getModifiers() & ActionEvent.SHIFT_MASK) == 1) {
 					face.addTextureXEnd(0.1);
-				}
-				else
-				{
+				} else {
 					face.addTextureXEnd(1.0);
 				}
 				cube.updateStartUVs();
@@ -408,19 +335,14 @@ public class UVPanel extends JPanel implements IValueUpdater
 		btnPlusXEnd.setSize(new Dimension(62, 30));
 		btnPlusXEnd.setFont(defaultFont);
 		btnPlusXEnd.setToolTipText("<html>Increases the end U.<br><b>Hold shift for decimals</b></html>");
-
-		btnPlusYEnd.addActionListener(e ->
-		{
-			if (manager.getSelectedElement() != null)
-			{
+		
+		btnPlusYEnd.addActionListener(e-> {
+			if (manager.getSelectedElement() != null) {
 				Element cube = manager.getSelectedElement();
 				Face face = cube.getSelectedFace();
-				if ((e.getModifiers() & ActionEvent.SHIFT_MASK) == 1)
-				{
+				if ((e.getModifiers() & ActionEvent.SHIFT_MASK) == 1) {
 					face.addTextureYEnd(0.1);
-				}
-				else
-				{
+				} else {
 					face.addTextureYEnd(1.0);
 				}
 				cube.updateStartUVs();
@@ -430,19 +352,14 @@ public class UVPanel extends JPanel implements IValueUpdater
 		btnPlusYEnd.setPreferredSize(new Dimension(62, 30));
 		btnPlusYEnd.setFont(defaultFont);
 		btnPlusYEnd.setToolTipText("<html>Increases the end V.<br><b>Hold shift for decimals</b></html>");
-
-		btnNegXEnd.addActionListener(e ->
-		{
-			if (manager.getSelectedElement() != null)
-			{
+		
+		btnNegXEnd.addActionListener(e-> {
+			if (manager.getSelectedElement() != null) {
 				Element cube = manager.getSelectedElement();
 				Face face = cube.getSelectedFace();
-				if ((e.getModifiers() & ActionEvent.SHIFT_MASK) == 1)
-				{
+				if ((e.getModifiers() & ActionEvent.SHIFT_MASK) == 1) {
 					face.addTextureXEnd(-0.1);
-				}
-				else
-				{
+				} else {
 					face.addTextureXEnd(-1.0);
 				}
 				cube.updateStartUVs();
@@ -452,19 +369,14 @@ public class UVPanel extends JPanel implements IValueUpdater
 		btnNegXEnd.setSize(new Dimension(62, 30));
 		btnNegXEnd.setFont(defaultFont);
 		btnNegXEnd.setToolTipText("<html>Decreases the end U.<br><b>Hold shift for decimals</b></html>");
-
-		btnNegYEnd.addActionListener(e ->
-		{
-			if (manager.getSelectedElement() != null)
-			{
+		
+		btnNegYEnd.addActionListener(e-> {
+			if (manager.getSelectedElement() != null) {
 				Element cube = manager.getSelectedElement();
 				Face face = cube.getSelectedFace();
-				if ((e.getModifiers() & ActionEvent.SHIFT_MASK) == 1)
-				{
+				if ((e.getModifiers() & ActionEvent.SHIFT_MASK) == 1) {
 					face.addTextureYEnd(-0.1);
-				}
-				else
-				{
+				} else {
 					face.addTextureYEnd(-1.0);
 				}
 				cube.updateStartUVs();
@@ -475,9 +387,8 @@ public class UVPanel extends JPanel implements IValueUpdater
 		btnNegYEnd.setFont(defaultFont);
 		btnNegYEnd.setToolTipText("<html>Decreases the end V.<br><b>Hold shift for decimals</b></html>");
 	}
-
-	public void addComponents()
-	{
+	
+	public void addComponents() {
 		add(btnPlusX);
 		add(btnPlusY);
 		add(btnPlusXEnd);
@@ -491,12 +402,10 @@ public class UVPanel extends JPanel implements IValueUpdater
 		add(btnNegXEnd);
 		add(btnNegYEnd);
 	}
-
+	
 	@Override
-	public void updateValues(Element cube)
-	{
-		if (cube != null)
-		{
+	public void updateValues(Element cube) {
+		if (cube != null) {
 			xStartField.setEnabled(true);
 			yStartField.setEnabled(true);
 			xEndField.setEnabled(true);
@@ -505,9 +414,7 @@ public class UVPanel extends JPanel implements IValueUpdater
 			yStartField.setText(df.format(cube.getSelectedFace().getStartV()));
 			xEndField.setText(df.format(cube.getSelectedFace().getEndU()));
 			yEndField.setText(df.format(cube.getSelectedFace().getEndV()));
-		}
-		else
-		{
+		} else {
 			xStartField.setEnabled(false);
 			yStartField.setEnabled(false);
 			xEndField.setEnabled(false);

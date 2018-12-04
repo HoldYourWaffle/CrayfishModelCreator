@@ -29,12 +29,11 @@ import com.mrcrayfish.modelcreator.panels.tabs.FacePanel;
 import com.mrcrayfish.modelcreator.panels.tabs.RotationPanel;
 import com.mrcrayfish.modelcreator.texture.PendingTexture;
 
-public class SidebarPanel extends JPanel implements ElementManager
-{
+public class SidebarPanel extends JPanel implements ElementManager {
 	private static final long serialVersionUID = 1L;
-
+	
 	private ModelCreator creator;
-
+	
 	// Swing Variables
 	private SpringLayout layout;
 	private DefaultListModel<Element> model = new DefaultListModel<>();
@@ -46,44 +45,39 @@ public class SidebarPanel extends JPanel implements ElementManager
 	private JButton btnDuplicate = new JButton();
 	private JTextField name = new JTextField();
 	private CuboidTabbedPane tabbedPane = new CuboidTabbedPane(this);
-
+	
 	private String particle = null;
 	private String particleLocation = null;
 	private boolean ambientOcc = true;
-
-	public SidebarPanel(ModelCreator creator)
-	{
+	
+	public SidebarPanel(ModelCreator creator) {
 		this.creator = creator;
 		setLayout(layout = new SpringLayout());
 		setPreferredSize(new Dimension(200, 760));
 		initComponents();
 		setLayoutConstaints();
 	}
-
-	public void initComponents()
-	{
+	
+	public void initComponents() {
 		Font defaultFont = new Font("SansSerif", Font.BOLD, 14);
-
+		
 		btnContainer = new JPanel(new GridLayout(1, 3, 4, 0));
 		btnContainer.setPreferredSize(new Dimension(190, 30));
-
+		
 		btnAdd.setIcon(Icons.cube);
 		btnAdd.setToolTipText("New Element");
-		btnAdd.addActionListener(e ->
-		{
+		btnAdd.addActionListener(e-> {
 			model.addElement(new Element(1, 1, 1));
 			list.setSelectedIndex(model.size() - 1);
 		});
 		btnAdd.setPreferredSize(new Dimension(30, 30));
 		btnContainer.add(btnAdd);
-
+		
 		btnRemove.setIcon(Icons.bin);
 		btnRemove.setToolTipText("Remove Element");
-		btnRemove.addActionListener(e ->
-		{
+		btnRemove.addActionListener(e-> {
 			int selected = list.getSelectedIndex();
-			if (selected != -1)
-			{
+			if (selected != -1) {
 				model.remove(selected);
 				name.setText("");
 				name.setEnabled(false);
@@ -93,14 +87,12 @@ public class SidebarPanel extends JPanel implements ElementManager
 		});
 		btnRemove.setPreferredSize(new Dimension(30, 30));
 		btnContainer.add(btnRemove);
-
+		
 		btnDuplicate.setIcon(Icons.copy);
 		btnDuplicate.setToolTipText("Duplicate Element");
-		btnDuplicate.addActionListener(e ->
-		{
+		btnDuplicate.addActionListener(e-> {
 			int selected = list.getSelectedIndex();
-			if (selected != -1)
-			{
+			if (selected != -1) {
 				model.addElement(new Element(model.getElementAt(selected)));
 				list.setSelectedIndex(model.getSize() - 1);
 			}
@@ -109,47 +101,40 @@ public class SidebarPanel extends JPanel implements ElementManager
 		btnDuplicate.setPreferredSize(new Dimension(30, 30));
 		btnContainer.add(btnDuplicate);
 		add(btnContainer);
-
+		
 		name.setPreferredSize(new Dimension(190, 30));
 		name.setToolTipText("Element Name");
 		name.setEnabled(false);
-		name.addKeyListener(new KeyAdapter()
-		{
+		name.addKeyListener(new KeyAdapter() {
 			@Override
-			public void keyPressed(KeyEvent e)
-			{
-				if (e.getKeyCode() == KeyEvent.VK_ENTER)
-				{
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					updateName();
 				}
 			}
 		});
-		name.addFocusListener(new FocusAdapter()
-		{
+		name.addFocusListener(new FocusAdapter() {
 			@Override
-			public void focusLost(FocusEvent e)
-			{
+			public void focusLost(FocusEvent e) {
 				updateName();
 			}
 		});
 		add(name);
-
+		
 		list.setModel(model);
-		list.addListSelectionListener(e ->
-		{
+		list.addListSelectionListener(e-> {
 			Element cube = getSelectedElement();
-			if (cube != null)
-			{
+			if (cube != null) {
 				tabbedPane.updateValues();
 				name.setEnabled(true);
 				name.setText(cube.toString());
 			}
 		});
-
+		
 		scrollPane = new JScrollPane(list);
 		scrollPane.setPreferredSize(new Dimension(190, 170));
 		add(scrollPane);
-
+		
 		tabbedPane.setBackground(new Color(127, 132, 145));
 		tabbedPane.setForeground(Color.WHITE);
 		tabbedPane.add("Element", new ElementPanel(this));
@@ -157,148 +142,121 @@ public class SidebarPanel extends JPanel implements ElementManager
 		tabbedPane.add("Faces", new FacePanel(this));
 		tabbedPane.setPreferredSize(new Dimension(190, 500));
 		tabbedPane.setTabPlacement(SwingConstants.TOP);
-		tabbedPane.addChangeListener(c ->
-		{
-			if (tabbedPane.getSelectedIndex() == 2)
-			{
+		tabbedPane.addChangeListener(c-> {
+			if (tabbedPane.getSelectedIndex() == 2) {
 				creator.setSidebar(ModelCreator.uvSidebar);
-			}
-			else
-			{
+			} else {
 				creator.setSidebar(null);
 			}
 		});
 		add(tabbedPane);
 	}
-
-	public void setLayoutConstaints()
-	{
+	
+	public void setLayoutConstaints() {
 		layout.putConstraint(SpringLayout.NORTH, name, 212, SpringLayout.NORTH, this);
 		layout.putConstraint(SpringLayout.NORTH, btnContainer, 176, SpringLayout.NORTH, this);
 		layout.putConstraint(SpringLayout.NORTH, tabbedPane, 250, SpringLayout.NORTH, this);
 	}
-
+	
 	@Override
-	public Element getSelectedElement()
-	{
+	public Element getSelectedElement() {
 		int i = list.getSelectedIndex();
 		if (i != -1)
 			return model.getElementAt(i);
 		return null;
 	}
-
+	
 	@Override
-	public void setSelectedElement(int pos)
-	{
-		if (pos < model.size())
-		{
-			if (pos >= 0)
-			{
+	public void setSelectedElement(int pos) {
+		if (pos < model.size()) {
+			if (pos >= 0) {
 				list.setSelectedIndex(pos);
-			}
-			else
-			{
+			} else {
 				list.clearSelection();
 			}
-
+			
 			updateValues();
 		}
 	}
-
+	
 	@Override
-	public List<Element> getAllElements()
-	{
+	public List<Element> getAllElements() {
 		List<Element> list = new ArrayList<>();
-		for (int i = 0; i < model.size(); i++)
-		{
+		for (int i = 0; i < model.size(); i++) {
 			list.add(model.getElementAt(i));
 		}
 		return list;
 	}
-
+	
 	@Override
-	public Element getElement(int index)
-	{
+	public Element getElement(int index) {
 		return model.getElementAt(index);
 	}
-
+	
 	@Override
-	public int getElementCount()
-	{
+	public int getElementCount() {
 		return model.size();
 	}
-
+	
 	@Override
-	public void updateName()
-	{
+	public void updateName() {
 		String newName = name.getText();
 		if (newName.isEmpty())
 			newName = "Cuboid";
 		Element cube = getSelectedElement();
-		if (cube != null)
-		{
+		if (cube != null) {
 			cube.setName(newName);
 			name.setText(newName);
 			list.updateUI();
 		}
 	}
-
+	
 	@Override
-	public void updateValues()
-	{
+	public void updateValues() {
 		tabbedPane.updateValues();
 	}
-
+	
 	@Override
-	public void addPendingTexture(PendingTexture texture)
-	{
+	public void addPendingTexture(PendingTexture texture) {
 		creator.pendingTextures.add(texture);
 	}
-
-	public ModelCreator getCreator()
-	{
+	
+	public ModelCreator getCreator() {
 		return creator;
 	}
-
+	
 	@Override
-	public boolean getAmbientOcc()
-	{
+	public boolean getAmbientOcc() {
 		return ambientOcc;
 	}
-
+	
 	@Override
-	public void setAmbientOcc(boolean occ)
-	{
+	public void setAmbientOcc(boolean occ) {
 		ambientOcc = occ;
 	}
-
+	
 	@Override
-	public void clearElements()
-	{
+	public void clearElements() {
 		model.clear();
 	}
-
+	
 	@Override
-	public void addElement(Element e)
-	{
+	public void addElement(Element e) {
 		model.addElement(e);
 	}
-
+	
 	@Override
-	public void setParticle(String texture)
-	{
+	public void setParticle(String texture) {
 		this.particle = texture;
 	}
-
+	
 	@Override
-	public String getParticle()
-	{
+	public String getParticle() {
 		return particle;
 	}
-
+	
 	@Override
-	public void reset()
-	{
+	public void reset() {
 		clearElements();
 		ambientOcc = true;
 		particle = null;

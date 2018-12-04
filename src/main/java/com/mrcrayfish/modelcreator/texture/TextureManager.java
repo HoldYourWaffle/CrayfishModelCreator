@@ -38,41 +38,34 @@ import com.mrcrayfish.modelcreator.Settings;
 import com.mrcrayfish.modelcreator.element.ElementManager;
 import com.mrcrayfish.modelcreator.panels.SidebarPanel;
 
-public class TextureManager
-{
+public class TextureManager {
 	private static List<TextureEntry> textureCache = new ArrayList<>();
-
+	
 	public static Texture cobblestone;
 	public static Texture dirt;
-
+	
 	public static File lastLocation = null;
-
-	public static boolean loadExternalTexture(File image, File meta) throws IOException
-	{
+	
+	public static boolean loadExternalTexture(File image, File meta) throws IOException {
 		TextureMeta textureMeta = TextureMeta.parse(meta);
-
-		if (textureMeta != null)
-		{
-			if (textureMeta.getAnimation() != null)
-			{
+		
+		if (textureMeta != null) {
+			if (textureMeta.getAnimation() != null) {
 				BufferedImage bimage = ImageIO.read(image);
-
+				
 				int fWidth = textureMeta.getAnimation().getWidth();
 				int fHeight = textureMeta.getAnimation().getHeight();
-
+				
 				ImageIcon icon = null;
-
+				
 				List<Texture> textures = new ArrayList<>();
-
+				
 				int xpos = 0;
-				while (xpos + fWidth <= bimage.getWidth())
-				{
+				while (xpos + fWidth <= bimage.getWidth()) {
 					int ypos = 0;
-					while (ypos + fHeight <= bimage.getHeight())
-					{
+					while (ypos + fHeight <= bimage.getHeight()) {
 						BufferedImage subImage = bimage.getSubimage(xpos, ypos, fWidth, fHeight);
-						if (icon == null)
-						{
+						if (icon == null) {
 							icon = TextureManager.upscale(new ImageIcon(subImage), 256);
 						}
 						Texture texture = BufferedImageUtil.getTexture("", subImage);
@@ -89,15 +82,13 @@ public class TextureManager
 		}
 		return loadTexture(image, null, null);
 	}
-
-	private static boolean loadTexture(File image, TextureMeta meta, String location) throws IOException
-	{
+	
+	private static boolean loadTexture(File image, TextureMeta meta, String location) throws IOException {
 		FileInputStream is = new FileInputStream(image);
 		Texture texture = TextureLoader.getTexture("PNG", is);
 		is.close();
-
-		if (texture.getImageHeight() % 16 != 0 | texture.getImageWidth() % 16 != 0)
-		{
+		
+		if (texture.getImageHeight() % 16 != 0 | texture.getImageWidth() % 16 != 0) {
 			texture.release();
 			return false;
 		}
@@ -105,80 +96,63 @@ public class TextureManager
 		textureCache.add(new TextureEntry(image.getName().replace(".png", "").replaceAll("\\d*$", ""), texture, icon, image.getAbsolutePath(), meta, location));
 		return true;
 	}
-
-	public static ImageIcon upscale(ImageIcon source, int length)
-	{
+	
+	public static ImageIcon upscale(ImageIcon source, int length) {
 		Image img = source.getImage();
 		Image newimg = img.getScaledInstance(length, length, java.awt.Image.SCALE_FAST);
 		return new ImageIcon(newimg);
 	}
-
-	public static TextureEntry getTextureEntry(String name)
-	{
-		for (TextureEntry entry : textureCache)
-		{
-			if (entry.getName().equalsIgnoreCase(name))
-			{
+	
+	public static TextureEntry getTextureEntry(String name) {
+		for (TextureEntry entry : textureCache) {
+			if (entry.getName().equalsIgnoreCase(name)) {
 				return entry;
 			}
 		}
 		return null;
 	}
-
-	public static Texture getTexture(String name)
-	{
-		for (TextureEntry entry : textureCache)
-		{
-			if (entry.getName().equalsIgnoreCase(name))
-			{
+	
+	public static Texture getTexture(String name) {
+		for (TextureEntry entry : textureCache) {
+			if (entry.getName().equalsIgnoreCase(name)) {
 				return entry.getTexture();
 			}
 		}
 		return null;
 	}
-
-	public static String getTextureLocation(String name)
-	{
-		for (TextureEntry entry : textureCache)
-		{
-			if (entry.getName().equalsIgnoreCase(name))
-			{
+	
+	public static String getTextureLocation(String name) {
+		for (TextureEntry entry : textureCache) {
+			if (entry.getName().equalsIgnoreCase(name)) {
 				return entry.getTextureLocation();
 			}
 		}
 		return null;
 	}
 	
-	public static String getMetaLocation(String name)
-	{
-		for (TextureEntry entry : textureCache)
-		{
-			if (entry.getName().equalsIgnoreCase(name))
-			{
+	public static String getMetaLocation(String name) {
+		for (TextureEntry entry : textureCache) {
+			if (entry.getName().equalsIgnoreCase(name)) {
 				return entry.getMetaLocation();
 			}
 		}
 		return null;
 	}
-
-	public static ImageIcon getIcon(String name)
-	{
-		for (TextureEntry entry : textureCache)
-		{
-			if (entry.getName().equalsIgnoreCase(name))
-			{
+	
+	public static ImageIcon getIcon(String name) {
+		for (TextureEntry entry : textureCache) {
+			if (entry.getName().equalsIgnoreCase(name)) {
 				return entry.getImage();
 			}
 		}
 		return null;
 	}
-
+	
 	private static String texture = null;
-
-	public static String display(ElementManager manager)
-	{
+	
+	public static String display(ElementManager manager) {
 		Font defaultFont = new Font("SansSerif", Font.BOLD, 18);
-
+		
 		DefaultListModel<String> model = generate();
 		JList<String> list = new JList<>();
 		list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
@@ -192,24 +166,21 @@ public class TextureManager
 		JScrollPane scroll = new JScrollPane(list);
 		scroll.getVerticalScrollBar().setVisible(false);
 		scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-
+		
 		JPanel panel = new JPanel(new GridLayout(1, 3));
 		panel.setPreferredSize(new Dimension(1000, 40));
 		JButton btnSelect = new JButton("Apply");
-		btnSelect.addActionListener(a ->
-		{
-			if (list.getSelectedValue() != null)
-			{
+		btnSelect.addActionListener(a-> {
+			if (list.getSelectedValue() != null) {
 				texture = list.getSelectedValue();
 				SwingUtilities.getWindowAncestor(btnSelect).dispose();
 			}
 		});
 		btnSelect.setFont(defaultFont);
 		panel.add(btnSelect);
-
+		
 		JButton btnImport = new JButton("Import");
-		btnImport.addActionListener(a ->
-		{
+		btnImport.addActionListener(a-> {
 			JFileChooser chooser = new JFileChooser();
 			chooser.setDialogTitle("Input File");
 			chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
@@ -217,45 +188,34 @@ public class TextureManager
 			
 			if (lastLocation == null) {
 				String dir = Settings.getImageImportDir();
-
+				
 				if (dir != null)
 					lastLocation = new File(dir);
 			}
 			
 			if (lastLocation != null) {
 				chooser.setCurrentDirectory(lastLocation);
-			}
-			else
-			{
-				try
-				{
+			} else {
+				try {
 					chooser.setCurrentDirectory(new File(ModelCreator.texturePath));
-				}
-				catch (Exception e1) {
+				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
 			}
-
-
+			
 			FileNameExtensionFilter filter = new FileNameExtensionFilter("PNG Images", "png");
 			chooser.setFileFilter(filter);
 			int returnVal = chooser.showOpenDialog(null);
-			if (returnVal == JFileChooser.APPROVE_OPTION)
-			{
+			if (returnVal == JFileChooser.APPROVE_OPTION) {
 				lastLocation = chooser.getSelectedFile().getParentFile();
 				Settings.setImageImportDir(lastLocation.toString());
 				
-				try
-				{
+				try {
 					File meta = new File(chooser.getSelectedFile().getAbsolutePath() + ".mcmeta");
-					manager.addPendingTexture(new PendingTexture(chooser.getSelectedFile(), meta, (success, texture) ->
-					{
-						if (success)
-						{
+					manager.addPendingTexture(new PendingTexture(chooser.getSelectedFile(), meta, (success, texture)-> {
+						if (success) {
 							model.insertElementAt(texture.replace(".png", ""), 0);
-						}
-						else
-						{
+						} else {
 							JOptionPane error = new JOptionPane();
 							error.setMessage("Width and height must be a multiple of 16.");
 							JDialog dialog = error.createDialog(btnImport, "Texture Error");
@@ -264,25 +224,22 @@ public class TextureManager
 							dialog.setVisible(true);
 						}
 					}));
-				}
-				catch (Exception e1)
-				{
+				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
 			}
 		});
 		btnImport.setFont(defaultFont);
 		panel.add(btnImport);
-
+		
 		JButton btnClose = new JButton("Close");
-		btnClose.addActionListener(a ->
-		{
+		btnClose.addActionListener(a-> {
 			texture = null;
 			SwingUtilities.getWindowAncestor(btnClose).dispose();
 		});
 		btnClose.setFont(defaultFont);
 		panel.add(btnClose);
-
+		
 		JDialog dialog = new JDialog(((SidebarPanel) manager).getCreator(), "Texture Manager", false);
 		dialog.setLayout(new BorderLayout());
 		dialog.setResizable(false);
@@ -293,15 +250,13 @@ public class TextureManager
 		dialog.pack();
 		dialog.setLocationRelativeTo(null);
 		dialog.setVisible(true);
-
+		
 		return texture;
 	}
-
-	private static DefaultListModel<String> generate()
-	{
+	
+	private static DefaultListModel<String> generate() {
 		DefaultListModel<String> model = new DefaultListModel<>();
-		for (TextureEntry entry : textureCache)
-		{
+		for (TextureEntry entry : textureCache) {
 			model.addElement(entry.getName());
 		}
 		return model;

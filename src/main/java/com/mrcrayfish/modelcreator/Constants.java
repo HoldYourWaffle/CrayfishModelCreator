@@ -1,7 +1,6 @@
 package com.mrcrayfish.modelcreator;
 
-public class Constants
-{
+public class Constants {
 	public static final String NAME = "Model Creator";
 	public static final String VERSION = "pre5";
 	

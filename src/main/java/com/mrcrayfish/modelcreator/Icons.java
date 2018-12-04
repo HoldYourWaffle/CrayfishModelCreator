@@ -3,8 +3,7 @@ package com.mrcrayfish.modelcreator;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
-public class Icons
-{
+public class Icons {
 	public static Icon add;
 	public static Icon add_rollover;
 	public static Icon bin;
@@ -38,8 +37,7 @@ public class Icons
 	public static Icon model_cauldron;
 	public static Icon model_chair;
 	
-	public static void init(Class<?> clazz)
-	{	
+	public static void init(Class<?> clazz) {
 		ClassLoader loader = clazz.getClassLoader();
 		
 		cube = new ImageIcon(loader.getResource("icons/cube.png"));

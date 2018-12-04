@@ -11,51 +11,38 @@ import java.net.URL;
 import com.mrcrayfish.modelcreator.ProjectManager;
 import com.mrcrayfish.modelcreator.element.ElementManager;
 
-public class Util
-{
-	public static void openUrl(String url)
-	{
+public class Util {
+	public static void openUrl(String url) {
 		Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
-		if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE))
-		{
-			try
-			{
+		if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
+			try {
 				desktop.browse(new URL(url).toURI());
-			}
-			catch (Exception e)
-			{
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
 	}
-
-	public static void loadModelFromJar(ElementManager manager, Class<?> clazz, String name)
-	{
-		try
-		{
+	
+	public static void loadModelFromJar(ElementManager manager, Class<?> clazz, String name) {
+		try {
 			InputStream is = clazz.getClassLoader().getResourceAsStream(name + ".model");
 			File file = File.createTempFile(name + ".model", "");
 			FileOutputStream fos = new FileOutputStream(file);
-
+			
 			byte[] buffer = new byte[1024];
-
+			
 			int len;
-			while ((len = is.read(buffer)) > 0)
-			{
+			while ((len = is.read(buffer)) > 0) {
 				fos.write(buffer, 0, len);
 			}
-
+			
 			fos.close();
 			is.close();
-
+			
 			ProjectManager.loadProject(manager, file.getAbsolutePath());
-		}
-		catch (FileNotFoundException e)
-		{
+		} catch (FileNotFoundException e) {
 			e.printStackTrace();
-		}
-		catch (IOException e)
-		{
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}

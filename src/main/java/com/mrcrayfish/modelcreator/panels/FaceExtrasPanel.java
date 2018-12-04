@@ -13,20 +13,18 @@ import com.mrcrayfish.modelcreator.element.Element;
 import com.mrcrayfish.modelcreator.element.ElementManager;
 import com.mrcrayfish.modelcreator.util.ComponentUtil;
 
-public class FaceExtrasPanel extends JPanel implements IValueUpdater
-{
+public class FaceExtrasPanel extends JPanel implements IValueUpdater {
 	private static final long serialVersionUID = 1L;
-
+	
 	private ElementManager manager;
-
+	
 	private JPanel horizontalBox;
 	private JRadioButton boxCullFace;
 	private JRadioButton boxFill;
 	private JRadioButton boxEnabled;
 	private JRadioButton boxAutoUV;
-
-	public FaceExtrasPanel(ElementManager manager)
-	{
+	
+	public FaceExtrasPanel(ElementManager manager) {
 		this.manager = manager;
 		setLayout(new BorderLayout(0, 5));
 		setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(new Color(221, 221, 228), 5), "<html><b>Extras</b></html>"));
@@ -34,28 +32,23 @@ public class FaceExtrasPanel extends JPanel implements IValueUpdater
 		initComponents();
 		addComponents();
 	}
-
-	public void initComponents()
-	{
+	
+	public void initComponents() {
 		horizontalBox = new JPanel(new GridLayout(2, 2));
 		boxCullFace = ComponentUtil.createRadioButton("Cullface", "<html>Should render face is another block is adjacent<br>Default: Off</html>");
-		boxCullFace.addActionListener(e ->
-		{
+		boxCullFace.addActionListener(e-> {
 			manager.getSelectedElement().getSelectedFace().setCullface(boxCullFace.isSelected());
 		});
 		boxFill = ComponentUtil.createRadioButton("Fill", "<html>Makes the texture fill the face<br>Default: Off</html>");
-		boxFill.addActionListener(e ->
-		{
+		boxFill.addActionListener(e-> {
 			manager.getSelectedElement().getSelectedFace().fitTexture(boxFill.isSelected());
 		});
-		boxEnabled = ComponentUtil.createRadioButton("Enable","<html>Determines if face should be rendered<br>Default: On</html>");
-		boxEnabled.addActionListener(e ->
-		{
+		boxEnabled = ComponentUtil.createRadioButton("Enable", "<html>Determines if face should be rendered<br>Default: On</html>");
+		boxEnabled.addActionListener(e-> {
 			manager.getSelectedElement().getSelectedFace().setEnabled(boxEnabled.isSelected());
 		});
 		boxAutoUV = ComponentUtil.createRadioButton("Auto UV", "<html>Determines if UV end coordinates should be set based on element size<br>Default: On</html>");
-		boxAutoUV.addActionListener(e ->
-		{
+		boxAutoUV.addActionListener(e-> {
 			manager.getSelectedElement().getSelectedFace().setAutoUVEnabled(boxAutoUV.isSelected());
 			manager.getSelectedElement().getSelectedFace().updateEndUV();
 			manager.updateValues();
@@ -64,19 +57,16 @@ public class FaceExtrasPanel extends JPanel implements IValueUpdater
 		horizontalBox.add(boxFill);
 		horizontalBox.add(boxEnabled);
 		horizontalBox.add(boxAutoUV);
-
+		
 	}
-
-	public void addComponents()
-	{
+	
+	public void addComponents() {
 		add(horizontalBox, BorderLayout.NORTH);
 	}
-
+	
 	@Override
-	public void updateValues(Element cube)
-	{
-		if (cube != null)
-		{
+	public void updateValues(Element cube) {
+		if (cube != null) {
 			boxCullFace.setEnabled(true);
 			boxCullFace.setSelected(cube.getSelectedFace().isCullfaced());
 			boxFill.setEnabled(true);
@@ -85,9 +75,7 @@ public class FaceExtrasPanel extends JPanel implements IValueUpdater
 			boxEnabled.setSelected(cube.getSelectedFace().isEnabled());
 			boxAutoUV.setEnabled(true);
 			boxAutoUV.setSelected(cube.getSelectedFace().isAutoUVEnabled());
-		}
-		else
-		{
+		} else {
 			boxCullFace.setEnabled(false);
 			boxCullFace.setSelected(false);
 			boxFill.setEnabled(false);

@@ -35,173 +35,136 @@ import java.util.zip.ZipFile;
  * @author mzechner
  * @author Nathan Sweet
  */
-public class SharedLibraryLoader
-{
-
+public class SharedLibraryLoader {
+	
 	public static final boolean isWindows = System.getProperty("os.name").contains("Windows");
 	public static final boolean isLinux = System.getProperty("os.name").contains("Linux");
 	public static final boolean isMac = System.getProperty("os.name").contains("Mac");
 	public static final boolean is64Bit = System.getProperty("os.arch").equals("amd64")
 			|| System.getProperty("os.arch").equals("x86_64");
-
+	
 	private static final boolean usingJws;
-
-	static
-	{
-		if (!isWindows && !isLinux && !isMac)
-		{
+	
+	static {
+		if (!isWindows && !isLinux && !isMac) {
 			throw new UnsupportedOperationException("Unknown platform: " + System.getProperty("os.name"));
 		}
-
+		
 		// Don't extract natives if using JWS.
 		boolean failed = false;
-		try
-		{
+		try {
 			Method method = Class.forName("javax.jnlp.ServiceManager").getDeclaredMethod("lookup",
 					new Class[] { String.class });
 			method.invoke(null, "javax.jnlp.PersistenceService");
-		}
-		catch (Throwable ex)
-		{
+		} catch (Throwable ex) {
 			failed = true;
 		}
 		usingJws = !failed;
 	}
-
+	
 	/**
 	 * Extracts the LWJGL native libraries from the classpath and sets the
 	 * "org.lwjgl.librarypath" system property.
 	 */
-	public static synchronized void load(boolean disableOpenAL)
-	{
+	public static synchronized void load(boolean disableOpenAL) {
 		if (usingJws)
 			return;
-
+		
 		SharedLibraryLoader loader = new SharedLibraryLoader();
 		File nativesDir = null;
-		try
-		{
-			if (SharedLibraryLoader.isWindows)
-			{
-
+		try {
+			if (SharedLibraryLoader.isWindows) {
+				
 				nativesDir = loader.extractFile(SharedLibraryLoader.is64Bit ? "lwjgl64.dll" : "lwjgl.dll", null)
 						.getParentFile();
-
+				
 				if (!disableOpenAL)
 					loader.extractFile(SharedLibraryLoader.is64Bit ? "OpenAL64.dll" : "OpenAL32.dll",
 							nativesDir.getName());
-
-			}
-			else if (SharedLibraryLoader.isMac)
-			{
-
+				
+			} else if (SharedLibraryLoader.isMac) {
+				
 				nativesDir = loader.extractFile("liblwjgl.dylib", null).getParentFile();
-
+				
 				if (!disableOpenAL)
 					loader.extractFile("openal.dylib", nativesDir.getName());
-
-			}
-			else if (SharedLibraryLoader.isLinux)
-			{
-
+				
+			} else if (SharedLibraryLoader.isLinux) {
+				
 				nativesDir = loader.extractFile(SharedLibraryLoader.is64Bit ? "liblwjgl64.so" : "liblwjgl.so", null)
 						.getParentFile();
-
+				
 				if (!disableOpenAL)
 					loader.extractFile(SharedLibraryLoader.is64Bit ? "libopenal64.so" : "libopenal.so",
 							nativesDir.getName());
-
-			}
-			else
-			{
+				
+			} else {
 				throw new UnsupportedOperationException("Unknown platform: " + System.getProperty("os.name"));
 			}
-		}
-		catch (Throwable ex)
-		{
+		} catch (Throwable ex) {
 			throw new Error("Unable to extract LWJGL natives.", ex);
 		}
-
+		
 		System.setProperty("org.lwjgl.librarypath", nativesDir.getAbsolutePath());
 	}
-
+	
 	private String nativesJar;
-
-	private SharedLibraryLoader()
-	{
+	
+	private SharedLibraryLoader() {
 	}
-
+	
 	/** Returns a CRC of the remaining bytes in the stream. */
-	private String crc(InputStream input)
-	{
+	private String crc(InputStream input) {
 		if (input == null)
 			throw new IllegalArgumentException("input cannot be null.");
 		CRC32 crc = new CRC32();
 		byte[] buffer = new byte[4096];
-		try
-		{
-			while (true)
-			{
+		try {
+			while (true) {
 				int length = input.read(buffer);
 				if (length == -1)
 					break;
 				crc.update(buffer, 0, length);
 			}
-		} catch (Exception ex)
-		{
-			if (input != null)
-			{
-				try
-				{
+		} catch (Exception ex) {
+			if (input != null) {
+				try {
 					input.close();
-				}
-				catch (IOException e)
-				{
+				} catch (IOException e) {
 				}
 			}
 		}
 		return Long.toString(crc.getValue(), 16);
 	}
-
-	private InputStream readFile(String path)
-	{
-		if (nativesJar == null)
-		{
+	
+	private InputStream readFile(String path) {
+		if (nativesJar == null) {
 			InputStream input = SharedLibraryLoader.class.getResourceAsStream("/" + path);
 			if (input == null)
 				throw new RuntimeException("Unable to read file for extraction: " + path);
 			return input;
 		}
-
+		
 		// Read from JAR.
 		ZipFile file = null;
-		try
-		{
+		try {
 			file = new ZipFile(nativesJar);
 			ZipEntry entry = file.getEntry(path);
 			if (entry == null)
 				throw new RuntimeException("Couldn't find '" + path + "' in JAR: " + nativesJar);
 			return file.getInputStream(entry);
-		}
-		catch (IOException ex)
-		{
+		} catch (IOException ex) {
 			throw new RuntimeException("Error reading '" + path + "' in JAR: " + nativesJar, ex);
-		}
-		finally
-		{
-			if (file != null)
-			{
-				try
-				{
+		} finally {
+			if (file != null) {
+				try {
 					file.close();
-				}
-				catch (IOException e)
-				{
+				} catch (IOException e) {
 				}
 			}
 		}
 	}
-
+	
 	/**
 	 * Extracts the specified file into the temp directory if it does not already
 	 * exist or the CRC does not match. If file extraction fails and the file exists
@@ -212,19 +175,15 @@ public class SharedLibraryLoader
 	 *                   extracted. If null, the file's CRC will be used.
 	 * @return The extracted file.
 	 */
-	private File extractFile(String sourcePath, String dirName) throws IOException
-	{
-		try
-		{
+	private File extractFile(String sourcePath, String dirName) throws IOException {
+		try {
 			String sourceCrc = crc(readFile(sourcePath));
 			if (dirName == null)
 				dirName = sourceCrc;
-
+			
 			File extractedFile = getExtractedFile(dirName, new File(sourcePath).getName());
 			return extractFile(sourcePath, sourceCrc, extractedFile);
-		}
-		catch (RuntimeException ex)
-		{
+		} catch (RuntimeException ex) {
 			// Fallback to file at java.library.path location, eg for applets.
 			File file = new File(System.getProperty("java.library.path"), sourcePath);
 			if (file.exists())
@@ -232,129 +191,103 @@ public class SharedLibraryLoader
 			throw ex;
 		}
 	}
-
+	
 	/**
 	 * Returns a path to a file that can be written. Tries multiple locations and
 	 * verifies writing succeeds.
 	 */
-	private File getExtractedFile(String dirName, String fileName)
-	{
+	private File getExtractedFile(String dirName, String fileName) {
 		// Temp directory with username in path.
 		File idealFile = new File(
 				System.getProperty("java.io.tmpdir") + "/lwjgl" + System.getProperty("user.name") + "/" + dirName,
 				fileName);
 		if (canWrite(idealFile))
 			return idealFile;
-
+		
 		// System provided temp directory.
-		try
-		{
+		try {
 			File file = File.createTempFile(dirName, null);
-			if (file.delete())
-			{
+			if (file.delete()) {
 				file = new File(file, fileName);
 				if (canWrite(file))
 					return file;
 			}
+		} catch (IOException ignored) {
 		}
-		catch (IOException ignored)
-		{
-		}
-
+		
 		// User home.
 		File file = new File(System.getProperty("user.home") + "/.lwjgl/" + dirName, fileName);
 		if (canWrite(file))
 			return file;
-
+		
 		// Relative directory.
 		file = new File(".temp/" + dirName, fileName);
 		if (canWrite(file))
 			return file;
-
+		
 		return idealFile; // Will likely fail, but we did our best.
 	}
-
+	
 	/**
 	 * Returns true if the parent directories of the file can be created and the
 	 * file can be written.
 	 */
-	private boolean canWrite(File file)
-	{
+	private boolean canWrite(File file) {
 		File parent = file.getParentFile();
 		File testFile;
-		if (file.exists())
-		{
+		if (file.exists()) {
 			if (!file.canWrite() || !canExecute(file))
 				return false;
 			// Don't overwrite existing file just to check if we can write to directory.
 			testFile = new File(parent, UUID.randomUUID().toString());
-		}
-		else
-		{
+		} else {
 			parent.mkdirs();
 			if (!parent.isDirectory())
 				return false;
 			testFile = file;
 		}
-		try
-		{
+		try {
 			new FileOutputStream(testFile).close();
 			if (!canExecute(testFile))
 				return false;
 			return true;
-		}
-		catch (Throwable ex)
-		{
+		} catch (Throwable ex) {
 			return false;
-		}
-		finally
-		{
+		} finally {
 			testFile.delete();
 		}
 	}
-
-	private boolean canExecute(File file)
-	{
-		try
-		{
+	
+	private boolean canExecute(File file) {
+		try {
 			if (file.canExecute())
 				return true;
-
+			
 			file.setExecutable(true, false);
 			return file.canExecute();
+		} catch (Exception ignored) {
 		}
-		catch (Exception ignored)
-		{
-		}
-
+		
 		return false;
 	}
-
-	private File extractFile(String sourcePath, String sourceCrc, File extractedFile) throws IOException
-	{
+	
+	private File extractFile(String sourcePath, String sourceCrc, File extractedFile) throws IOException {
 		String extractedCrc = null;
-		if (extractedFile.exists())
-		{
-			try
-			{
+		if (extractedFile.exists()) {
+			try {
 				extractedCrc = crc(new FileInputStream(extractedFile));
-			}
-			catch (FileNotFoundException ignored)
-			{
+			} catch (FileNotFoundException ignored) {
 			}
 		}
-
+		
 		// If file doesn't exist or the CRC doesn't match, extract it to the temp dir.
-		if (extractedCrc == null || !extractedCrc.equals(sourceCrc))
-		{
-			try
-			{
+		if (extractedCrc == null || !extractedCrc.equals(sourceCrc)) {
+			try {
 				InputStream input = readFile(sourcePath);
 				extractedFile.getParentFile().mkdirs();
 				FileOutputStream output = new FileOutputStream(extractedFile);
 				byte[] buffer = new byte[4096];
-				while (true)
-				{
+				while (true) {
 					int length = input.read(buffer);
 					if (length == -1)
 						break;
@@ -362,15 +295,13 @@ public class SharedLibraryLoader
 				}
 				input.close();
 				output.close();
-			}
-			catch (IOException ex)
-			{
+			} catch (IOException ex) {
 				throw new RuntimeException(
 						"Error extracting file: " + sourcePath + "\nTo: " + extractedFile.getAbsolutePath(), ex);
 			}
 		}
-
+		
 		return extractedFile;
 	}
-
+	
 }

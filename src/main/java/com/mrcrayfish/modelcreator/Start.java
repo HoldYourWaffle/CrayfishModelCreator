@@ -8,23 +8,19 @@ import javax.swing.UIManager;
 import com.jtattoo.plaf.fast.FastLookAndFeel;
 import com.mrcrayfish.modelcreator.util.SharedLibraryLoader;
 
-public class Start
-{
-	public static void main(String[] args)
-	{
+public class Start {
+	public static void main(String[] args) {
 		SharedLibraryLoader.load(false);
 		
 		Double version = Double.parseDouble(System.getProperty("java.specification.version"));
-		if (version < 1.8)
-		{
+		if (version < 1.8) {
 			JOptionPane.showMessageDialog(null, "You need Java 1.8 or higher to run this program.");
 			return;
 		}
-
+		
 		System.setProperty("org.lwjgl.util.Debug", "true");
-
-		try
-		{
+		
+		try {
 			Properties props = new Properties();
 			props.put("logoString", "");
 			props.put("centerWindowTitle", "on");
@@ -38,12 +34,10 @@ public class Start
 			props.put("windowBorderColor", "97 102 110");
 			FastLookAndFeel.setTheme(props);
 			UIManager.setLookAndFeel("com.jtattoo.plaf.fast.FastLookAndFeel");
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+		
 		new ModelCreator(Constants.NAME + " - " + Constants.VERSION);
 	}
 }

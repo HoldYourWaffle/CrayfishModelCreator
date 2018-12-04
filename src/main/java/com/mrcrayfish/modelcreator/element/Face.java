@@ -14,15 +14,14 @@ import org.newdawn.slick.opengl.TextureImpl;
 import com.mrcrayfish.modelcreator.texture.TextureEntry;
 import com.mrcrayfish.modelcreator.texture.TextureManager;
 
-public class Face
-{
+public class Face {
 	private static final Color RED = new Color(1, 0, 0);
 	private static final Color GREEN = new Color(0, 1, 0);
 	private static final Color BLUE = new Color(0, 0, 1);
 	private static final Color YELLOW = new Color(1, 1, 0);
 	private static final Color MAGENTA = new Color(1, 0, 1);
 	private static final Color CYAN = new Color(0, 1, 1);
-
+	
 	private String texture = null;
 	private String textureLocation = "blocks/";
 	private double textureU = 0;
@@ -35,293 +34,272 @@ public class Face
 	private boolean enabled = true;
 	private boolean autoUV = true;
 	private int rotation;
-
+	
 	private Element cuboid;
 	private int side;
-
-	public Face(Element cuboid, int side)
-	{
+	
+	public Face(Element cuboid, int side) {
 		this.cuboid = cuboid;
 		this.side = side;
 	}
-
-	public void renderNorth()
-	{
+	
+	public void renderNorth() {
 		TextureEntry entry = TextureManager.getTextureEntry(texture);
 		int passes = 1;
-
+		
 		if (entry != null)
 			passes = entry.getPasses();
-
-		for (int i = 0; i < passes; i++)
-		{
+		
+		for (int i = 0; i < passes; i++) {
 			renderNorth(i);
 		}
 	}
-
-	private void renderNorth(int pass)
-	{
+	
+	private void renderNorth(int pass) {
 		GL11.glPushMatrix();
 		{
 			startRender(pass);
-
+			
 			GL11.glBegin(GL11.GL_QUADS);
 			{
 				if (binded)
 					setTexCoord(0);
 				GL11.glVertex3d(cuboid.getStartX() + cuboid.getWidth(), cuboid.getStartY(), cuboid.getStartZ());
-
+				
 				if (binded)
 					setTexCoord(1);
 				GL11.glVertex3d(cuboid.getStartX(), cuboid.getStartY(), cuboid.getStartZ());
-
+				
 				if (binded)
 					setTexCoord(2);
 				GL11.glVertex3d(cuboid.getStartX(), cuboid.getStartY() + cuboid.getHeight(), cuboid.getStartZ());
-
+				
 				if (binded)
 					setTexCoord(3);
 				GL11.glVertex3d(cuboid.getStartX() + cuboid.getWidth(), cuboid.getStartY() + cuboid.getHeight(), cuboid.getStartZ());
 			}
 			GL11.glEnd();
-
+			
 			finishRender();
 		}
 		GL11.glPopMatrix();
 	}
-
-	public void renderEast()
-	{
+	
+	public void renderEast() {
 		TextureEntry entry = TextureManager.getTextureEntry(texture);
 		int passes = 1;
-
+		
 		if (entry != null)
 			passes = entry.getPasses();
-
-		for (int i = 0; i < passes; i++)
-		{
+		
+		for (int i = 0; i < passes; i++) {
 			renderEast(i);
 		}
 	}
-
-	private void renderEast(int pass)
-	{
+	
+	private void renderEast(int pass) {
 		GL11.glPushMatrix();
 		{
 			startRender(pass);
-
+			
 			GL11.glBegin(GL11.GL_QUADS);
 			{
 				if (binded)
 					setTexCoord(0);
 				GL11.glVertex3d(cuboid.getStartX() + cuboid.getWidth(), cuboid.getStartY(), cuboid.getStartZ() + cuboid.getDepth());
-
+				
 				if (binded)
 					setTexCoord(1);
 				GL11.glVertex3d(cuboid.getStartX() + cuboid.getWidth(), cuboid.getStartY(), cuboid.getStartZ());
-
+				
 				if (binded)
 					setTexCoord(2);
 				GL11.glVertex3d(cuboid.getStartX() + cuboid.getWidth(), cuboid.getStartY() + cuboid.getHeight(), cuboid.getStartZ());
-
+				
 				if (binded)
 					setTexCoord(3);
 				GL11.glVertex3d(cuboid.getStartX() + cuboid.getWidth(), cuboid.getStartY() + cuboid.getHeight(), cuboid.getStartZ() + cuboid.getDepth());
 			}
 			GL11.glEnd();
-
+			
 			finishRender();
 		}
 		GL11.glPopMatrix();
 	}
-
-	public void renderSouth()
-	{
+	
+	public void renderSouth() {
 		TextureEntry entry = TextureManager.getTextureEntry(texture);
 		int passes = 1;
-
+		
 		if (entry != null)
 			passes = entry.getPasses();
-
-		for (int i = 0; i < passes; i++)
-		{
+		
+		for (int i = 0; i < passes; i++) {
 			renderSouth(i);
 		}
 	}
-
-	private void renderSouth(int pass)
-	{
+	
+	private void renderSouth(int pass) {
 		GL11.glPushMatrix();
 		{
 			startRender(pass);
-
+			
 			GL11.glBegin(GL11.GL_QUADS);
 			{
 				if (binded)
 					setTexCoord(0);
 				GL11.glVertex3d(cuboid.getStartX(), cuboid.getStartY(), cuboid.getStartZ() + cuboid.getDepth());
-
+				
 				if (binded)
 					setTexCoord(1);
 				GL11.glVertex3d(cuboid.getStartX() + cuboid.getWidth(), cuboid.getStartY(), cuboid.getStartZ() + cuboid.getDepth());
-
+				
 				if (binded)
 					setTexCoord(2);
 				GL11.glVertex3d(cuboid.getStartX() + cuboid.getWidth(), cuboid.getStartY() + cuboid.getHeight(), cuboid.getStartZ() + cuboid.getDepth());
-
+				
 				if (binded)
 					setTexCoord(3);
 				GL11.glVertex3d(cuboid.getStartX(), cuboid.getStartY() + cuboid.getHeight(), cuboid.getStartZ() + cuboid.getDepth());
 			}
 			GL11.glEnd();
-
+			
 			finishRender();
 		}
 		GL11.glPopMatrix();
 	}
-
-	public void renderWest()
-	{
+	
+	public void renderWest() {
 		TextureEntry entry = TextureManager.getTextureEntry(texture);
 		int passes = 1;
-
+		
 		if (entry != null)
 			passes = entry.getPasses();
-
-		for (int i = 0; i < passes; i++)
-		{
+		
+		for (int i = 0; i < passes; i++) {
 			renderWest(i);
 		}
 	}
-
-	private void renderWest(int pass)
-	{
+	
+	private void renderWest(int pass) {
 		GL11.glPushMatrix();
 		{
 			startRender(pass);
-
+			
 			GL11.glBegin(GL11.GL_QUADS);
 			{
 				if (binded)
 					setTexCoord(0);
 				GL11.glVertex3d(cuboid.getStartX(), cuboid.getStartY(), cuboid.getStartZ());
-
+				
 				if (binded)
 					setTexCoord(1);
 				GL11.glVertex3d(cuboid.getStartX(), cuboid.getStartY(), cuboid.getStartZ() + cuboid.getDepth());
-
+				
 				if (binded)
 					setTexCoord(2);
 				GL11.glVertex3d(cuboid.getStartX(), cuboid.getStartY() + cuboid.getHeight(), cuboid.getStartZ() + cuboid.getDepth());
-
+				
 				if (binded)
 					setTexCoord(3);
 				GL11.glVertex3d(cuboid.getStartX(), cuboid.getStartY() + cuboid.getHeight(), cuboid.getStartZ());
 			}
 			GL11.glEnd();
-
+			
 			finishRender();
 		}
 		GL11.glPopMatrix();
 	}
-
-	public void renderUp()
-	{
+	
+	public void renderUp() {
 		TextureEntry entry = TextureManager.getTextureEntry(texture);
 		int passes = 1;
-
+		
 		if (entry != null)
 			passes = entry.getPasses();
-
-		for (int i = 0; i < passes; i++)
-		{
+		
+		for (int i = 0; i < passes; i++) {
 			renderUp(i);
 		}
 	}
-
-	private void renderUp(int pass)
-	{
+	
+	private void renderUp(int pass) {
 		GL11.glPushMatrix();
 		{
 			startRender(pass);
-
+			
 			GL11.glBegin(GL11.GL_QUADS);
 			{
 				if (binded)
 					setTexCoord(0);
 				GL11.glVertex3d(cuboid.getStartX(), cuboid.getStartY() + cuboid.getHeight(), cuboid.getStartZ() + cuboid.getDepth());
-
+				
 				if (binded)
 					setTexCoord(1);
 				GL11.glVertex3d(cuboid.getStartX() + cuboid.getWidth(), cuboid.getStartY() + cuboid.getHeight(), cuboid.getStartZ() + cuboid.getDepth());
-
+				
 				if (binded)
 					setTexCoord(2);
 				GL11.glVertex3d(cuboid.getStartX() + cuboid.getWidth(), cuboid.getStartY() + cuboid.getHeight(), cuboid.getStartZ());
-
+				
 				if (binded)
 					setTexCoord(3);
 				GL11.glVertex3d(cuboid.getStartX(), cuboid.getStartY() + cuboid.getHeight(), cuboid.getStartZ());
 			}
 			GL11.glEnd();
-
+			
 			finishRender();
 		}
 		GL11.glPopMatrix();
 	}
-
-	public void renderDown()
-	{
+	
+	public void renderDown() {
 		TextureEntry entry = TextureManager.getTextureEntry(texture);
 		int passes = 1;
-
+		
 		if (entry != null)
 			passes = entry.getPasses();
-
-		for (int i = 0; i < passes; i++)
-		{
+		
+		for (int i = 0; i < passes; i++) {
 			renderDown(i);
 		}
 	}
-
-	public void renderDown(int pass)
-	{
+	
+	public void renderDown(int pass) {
 		GL11.glPushMatrix();
 		{
 			startRender(pass);
-
+			
 			GL11.glBegin(GL11.GL_QUADS);
 			{
 				if (binded)
 					setTexCoord(0);
 				GL11.glVertex3d(cuboid.getStartX(), cuboid.getStartY(), cuboid.getStartZ());
-
+				
 				if (binded)
 					setTexCoord(1);
 				GL11.glVertex3d(cuboid.getStartX() + cuboid.getWidth(), cuboid.getStartY(), cuboid.getStartZ());
-
+				
 				if (binded)
 					setTexCoord(2);
 				GL11.glVertex3d(cuboid.getStartX() + cuboid.getWidth(), cuboid.getStartY(), cuboid.getStartZ() + cuboid.getDepth());
-
+				
 				if (binded)
 					setTexCoord(3);
 				GL11.glVertex3d(cuboid.getStartX(), cuboid.getStartY(), cuboid.getStartZ() + cuboid.getDepth());
 			}
 			GL11.glEnd();
-
+			
 			finishRender();
 		}
 		GL11.glPopMatrix();
 	}
-
-	public void setTexCoord(int corner)
-	{
+	
+	public void setTexCoord(int corner) {
 		setTexCoord(corner, false);
 	}
-
-	public void setTexCoord(int corner, boolean forceFit)
-	{
+	
+	public void setTexCoord(int corner, boolean forceFit) {
 		int coord = corner + rotation;
 		if (coord == 0 | coord == 4)
 			GL11.glTexCoord2d(fitTexture | forceFit ? 0 : (textureU / 16), fitTexture | forceFit ? 1 : (textureVEnd / 16));
@@ -332,291 +310,239 @@ public class Face
 		if (coord == 3)
 			GL11.glTexCoord2d(fitTexture | forceFit ? 0 : (textureU / 16), fitTexture | forceFit ? 0 : (textureV / 16));
 	}
-
-	public void startRender(int pass)
-	{
+	
+	public void startRender(int pass) {
 		GL11.glEnable(GL_TEXTURE_2D);
 		GL11.glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 		bindTexture(pass);
 	}
-
-	public void finishRender()
-	{
+	
+	public void finishRender() {
 		GL11.glDisable(GL_TEXTURE_2D);
 	}
-
-	public void setTexture(String texture)
-	{
+	
+	public void setTexture(String texture) {
 		this.texture = texture;
 	}
-
-	public void bindTexture(int pass)
-	{
+	
+	public void bindTexture(int pass) {
 		TextureImpl.bindNone();
-		if (texture != null)
-		{
+		if (texture != null) {
 			TextureEntry entry = TextureManager.getTextureEntry(texture);
-			if (entry != null)
-			{
-				if (pass == 0)
-				{
-					if (entry.getTexture() != null)
-					{
+			if (entry != null) {
+				if (pass == 0) {
+					if (entry.getTexture() != null) {
 						GL11.glColor3f(1.0F, 1.0F, 1.0F);
 						entry.getTexture().bind();
 					}
-				}
-				else if (pass == 1)
-				{
-					if (entry.isAnimated() && entry.getNextTexture() != null)
-					{
+				} else if (pass == 1) {
+					if (entry.isAnimated() && entry.getNextTexture() != null) {
 						GL11.glEnable(GL11.GL_BLEND);
 						GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 						GL11.glDepthFunc(GL11.GL_EQUAL);
-
+						
 						entry.getNextTexture().bind();
 						GL11.glColor4d(1.0D, 1.0D, 1.0D, entry.getAnimation().getFrameInterpolation());
 					}
 				}
-
-				if (entry.hasProperties() && entry.getProperties().isBlurred())
-				{
+				
+				if (entry.hasProperties() && entry.getProperties().isBlurred()) {
 					GL11.glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 					GL11.glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 				}
-
+				
 				binded = true;
 			}
 		}
 	}
-
-	public void moveTextureU(double amt)
-	{
+	
+	public void moveTextureU(double amt) {
 		this.textureU += amt;
 		this.textureUEnd += amt;
 	}
-
-	public void moveTextureV(double amt)
-	{
+	
+	public void moveTextureV(double amt) {
 		this.textureV += amt;
 		this.textureVEnd += amt;
 	}
-
-	public void addTextureX(double amt)
-	{
+	
+	public void addTextureX(double amt) {
 		this.textureU += amt;
 	}
-
-	public void addTextureY(double amt)
-	{
+	
+	public void addTextureY(double amt) {
 		this.textureV += amt;
 	}
-
-	public void addTextureXEnd(double amt)
-	{
+	
+	public void addTextureXEnd(double amt) {
 		this.textureUEnd += amt;
 	}
-
-	public void addTextureYEnd(double amt)
-	{
+	
+	public void addTextureYEnd(double amt) {
 		this.textureVEnd += amt;
 	}
-
-	public double getStartU()
-	{
+	
+	public double getStartU() {
 		return textureU;
 	}
-
-	public double getStartV()
-	{
+	
+	public double getStartV() {
 		return textureV;
 	}
-
-	public double getEndU()
-	{
+	
+	public double getEndU() {
 		return textureUEnd;
 	}
-
-	public double getEndV()
-	{
+	
+	public double getEndV() {
 		return textureVEnd;
 	}
-
-	public void setStartU(double u)
-	{
+	
+	public void setStartU(double u) {
 		textureU = u;
 	}
-
-	public void setStartV(double v)
-	{
+	
+	public void setStartV(double v) {
 		textureV = v;
 	}
-
-	public void setEndU(double ue)
-	{
+	
+	public void setEndU(double ue) {
 		textureUEnd = ue;
 	}
-
-	public void setEndV(double ve)
-	{
+	
+	public void setEndV(double ve) {
 		textureVEnd = ve;
 	}
-
-	public String getTextureName()
-	{
+	
+	public String getTextureName() {
 		return texture;
 	}
-
-	public Texture getTexture()
-	{
+	
+	public Texture getTexture() {
 		return TextureManager.getTexture(texture);
 	}
-
-	public String getTextureLocation()
-	{
+	
+	public String getTextureLocation() {
 		return textureLocation;
 	}
-
-	public void setTextureLocation(String textureLocation)
-	{
+	
+	public void setTextureLocation(String textureLocation) {
 		this.textureLocation = textureLocation;
 	}
-
-	public void fitTexture(boolean fitTexture)
-	{
+	
+	public void fitTexture(boolean fitTexture) {
 		this.fitTexture = fitTexture;
 	}
-
-	public boolean shouldFitTexture()
-	{
+	
+	public boolean shouldFitTexture() {
 		return fitTexture;
 	}
-
-	public int getSide()
-	{
+	
+	public int getSide() {
 		return side;
 	}
-
-	public boolean isCullfaced()
-	{
+	
+	public boolean isCullfaced() {
 		return cullface;
 	}
-
-	public void setCullface(boolean cullface)
-	{
+	
+	public void setCullface(boolean cullface) {
 		this.cullface = cullface;
 	}
-
-	public boolean isEnabled()
-	{
+	
+	public boolean isEnabled() {
 		return enabled;
 	}
-
-	public void setEnabled(boolean enabled)
-	{
+	
+	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
-
-	public boolean isAutoUVEnabled()
-	{
+	
+	public boolean isAutoUVEnabled() {
 		return autoUV;
 	}
-
-	public void setAutoUVEnabled(boolean enabled)
-	{
+	
+	public void setAutoUVEnabled(boolean enabled) {
 		this.autoUV = enabled;
 	}
-
-	public boolean isBinded()
-	{
+	
+	public boolean isBinded() {
 		return binded;
 	}
-
-	public void updateStartUV()
-	{
-		if (autoUV)
-		{
+	
+	public void updateStartUV() {
+		if (autoUV) {
 			textureU = textureUEnd - cuboid.getFaceDimension(side).getWidth();
 			textureV = textureVEnd - cuboid.getFaceDimension(side).getHeight();
 		}
 	}
 	
-	public void updateEndUV()
-	{
-		if (autoUV)
-		{
+	public void updateEndUV() {
+		if (autoUV) {
 			textureUEnd = textureU + cuboid.getFaceDimension(side).getWidth();
 			textureVEnd = textureV + cuboid.getFaceDimension(side).getHeight();
 		}
 	}
-
-	public static String getFaceName(int face)
-	{
-		switch (face)
-		{
-		case 0:
-			return "north";
-		case 1:
-			return "east";
-		case 2:
-			return "south";
-		case 3:
-			return "west";
-		case 4:
-			return "up";
-		case 5:
-			return "down";
+	
+	public static String getFaceName(int face) {
+		switch (face) {
+			case 0:
+				return "north";
+			case 1:
+				return "east";
+			case 2:
+				return "south";
+			case 3:
+				return "west";
+			case 4:
+				return "up";
+			case 5:
+				return "down";
 		}
 		return null;
 	}
-
-	public static int getFaceSide(String name)
-	{
-		switch (name)
-		{
-		case "north":
-			return 0;
-		case "east":
-			return 1;
-		case "south":
-			return 2;
-		case "west":
-			return 3;
-		case "up":
-			return 4;
-		case "down":
-			return 5;
+	
+	public static int getFaceSide(String name) {
+		switch (name) {
+			case "north":
+				return 0;
+			case "east":
+				return 1;
+			case "south":
+				return 2;
+			case "west":
+				return 3;
+			case "up":
+				return 4;
+			case "down":
+				return 5;
 		}
 		return -1;
 	}
-
-	public static Color getFaceColour(int side)
-	{
-		switch (side)
-		{
-		case 0:
-			return RED;
-		case 1:
-			return GREEN;
-		case 2:
-			return BLUE;
-		case 3:
-			return YELLOW;
-		case 4:
-			return CYAN;
-		case 5:
-			return MAGENTA;
+	
+	public static Color getFaceColour(int side) {
+		switch (side) {
+			case 0:
+				return RED;
+			case 1:
+				return GREEN;
+			case 2:
+				return BLUE;
+			case 3:
+				return YELLOW;
+			case 4:
+				return CYAN;
+			case 5:
+				return MAGENTA;
 		}
 		return RED;
 	}
-
-	public int getRotation()
-	{
+	
+	public int getRotation() {
 		return rotation;
 	}
-
-	public void setRotation(int rotation)
-	{
+	
+	public void setRotation(int rotation) {
 		this.rotation = rotation;
 	}
 }

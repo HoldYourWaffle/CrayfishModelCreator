@@ -24,12 +24,11 @@ import com.mrcrayfish.modelcreator.element.Element;
 import com.mrcrayfish.modelcreator.element.ElementManager;
 import com.mrcrayfish.modelcreator.util.Parser;
 
-public class SizePanel extends JPanel implements IValueUpdater
-{
+public class SizePanel extends JPanel implements IValueUpdater {
 	private static final long serialVersionUID = 1L;
-
+	
 	private ElementManager manager;
-
+	
 	private JButton btnPlusX;
 	private JButton btnPlusY;
 	private JButton btnPlusZ;
@@ -39,11 +38,10 @@ public class SizePanel extends JPanel implements IValueUpdater
 	private JButton btnNegX;
 	private JButton btnNegY;
 	private JButton btnNegZ;
-
+	
 	private DecimalFormat df = new DecimalFormat("#.#");
-
-	public SizePanel(ElementManager manager)
-	{
+	
+	public SizePanel(ElementManager manager) {
 		this.manager = manager;
 		setLayout(new GridLayout(3, 3, 4, 4));
 		setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(new Color(221, 221, 228), 5), "<html><b>Size</b></html>"));
@@ -52,9 +50,8 @@ public class SizePanel extends JPanel implements IValueUpdater
 		initProperties();
 		addComponents();
 	}
-
-	public void initComponents()
-	{
+	
+	public void initComponents() {
 		btnPlusX = new JButton(Icons.arrow_up);
 		btnPlusY = new JButton(Icons.arrow_up);
 		btnPlusZ = new JButton(Icons.arrow_up);
@@ -65,42 +62,33 @@ public class SizePanel extends JPanel implements IValueUpdater
 		btnNegY = new JButton(Icons.arrow_down);
 		btnNegZ = new JButton(Icons.arrow_down);
 	}
-
-	public void initProperties()
-	{
+	
+	public void initProperties() {
 		Font defaultFont = new Font("SansSerif", Font.BOLD, 20);
 		xSizeField.setSize(new Dimension(62, 30));
 		xSizeField.setFont(defaultFont);
 		xSizeField.setHorizontalAlignment(SwingConstants.CENTER);
-		xSizeField.addKeyListener(new KeyAdapter()
-		{
+		xSizeField.addKeyListener(new KeyAdapter() {
 			@Override
-			public void keyPressed(KeyEvent e)
-			{
-				if (e.getKeyCode() == KeyEvent.VK_ENTER)
-				{
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					Element element = manager.getSelectedElement();
-					if (element != null)
-					{
+					if (element != null) {
 						element.setWidth(Parser.parseDouble(xSizeField.getText(), element.getWidth()));
 						element.updateEndUVs();
 						manager.updateValues();
 					}
-
+					
 				}
 			}
 		});
-		xSizeField.addMouseWheelListener(new MouseAdapter()
-		{
+		xSizeField.addMouseWheelListener(new MouseAdapter() {
 			@Override
-			public void mouseWheelMoved(MouseWheelEvent e)
-			{
+			public void mouseWheelMoved(MouseWheelEvent e) {
 				Element element = manager.getSelectedElement();
-				if (element != null)
-				{
+				if (element != null) {
 					float scrollAmount = e.getUnitsToScroll() / 3;
-					if ((e.getModifiers() & ActionEvent.SHIFT_MASK) == 1)
-					{
+					if ((e.getModifiers() & ActionEvent.SHIFT_MASK) == 1) {
 						scrollAmount /= 10;
 					}
 					element.setWidth(Parser.parseDouble(xSizeField.getText(), element.getWidth()) - scrollAmount);
@@ -109,53 +97,42 @@ public class SizePanel extends JPanel implements IValueUpdater
 				}
 			}
 		});
-		xSizeField.addFocusListener(new FocusAdapter()
-		{
+		xSizeField.addFocusListener(new FocusAdapter() {
 			@Override
-			public void focusLost(FocusEvent e)
-			{
+			public void focusLost(FocusEvent e) {
 				Element element = manager.getSelectedElement();
-				if (element != null)
-				{
+				if (element != null) {
 					element.setWidth(Parser.parseDouble(xSizeField.getText(), element.getWidth()));
 					element.updateEndUVs();
 					manager.updateValues();
 				}
 			}
 		});
-
+		
 		ySizeField.setSize(new Dimension(62, 30));
 		ySizeField.setFont(defaultFont);
 		ySizeField.setHorizontalAlignment(SwingConstants.CENTER);
-		ySizeField.addKeyListener(new KeyAdapter()
-		{
+		ySizeField.addKeyListener(new KeyAdapter() {
 			@Override
-			public void keyPressed(KeyEvent e)
-			{
-				if (e.getKeyCode() == KeyEvent.VK_ENTER)
-				{
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					Element element = manager.getSelectedElement();
-					if (element != null)
-					{
+					if (element != null) {
 						element.setHeight(Parser.parseDouble(ySizeField.getText(), element.getHeight()));
 						element.updateEndUVs();
 						manager.updateValues();
 					}
-
+					
 				}
 			}
 		});
-		ySizeField.addMouseWheelListener(new MouseAdapter()
-		{
+		ySizeField.addMouseWheelListener(new MouseAdapter() {
 			@Override
-			public void mouseWheelMoved(MouseWheelEvent e)
-			{
+			public void mouseWheelMoved(MouseWheelEvent e) {
 				Element element = manager.getSelectedElement();
-				if (element != null)
-				{
+				if (element != null) {
 					float scrollAmount = e.getUnitsToScroll() / 3;
-					if ((e.getModifiers() & ActionEvent.SHIFT_MASK) == 1)
-					{
+					if ((e.getModifiers() & ActionEvent.SHIFT_MASK) == 1) {
 						scrollAmount /= 10;
 					}
 					element.setHeight(Parser.parseDouble(ySizeField.getText(), element.getHeight()) - scrollAmount);
@@ -164,67 +141,53 @@ public class SizePanel extends JPanel implements IValueUpdater
 				}
 			}
 		});
-		ySizeField.addFocusListener(new FocusAdapter()
-		{
+		ySizeField.addFocusListener(new FocusAdapter() {
 			@Override
-			public void focusLost(FocusEvent e)
-			{
+			public void focusLost(FocusEvent e) {
 				Element element = manager.getSelectedElement();
-				if (element != null)
-				{
+				if (element != null) {
 					element.setHeight(Parser.parseDouble(ySizeField.getText(), element.getHeight()));
 					element.updateEndUVs();
 					manager.updateValues();
 				}
 			}
 		});
-
+		
 		zSizeField.setSize(new Dimension(62, 30));
 		zSizeField.setFont(defaultFont);
 		zSizeField.setHorizontalAlignment(SwingConstants.CENTER);
-		zSizeField.addKeyListener(new KeyAdapter()
-		{
+		zSizeField.addKeyListener(new KeyAdapter() {
 			@Override
-			public void keyPressed(KeyEvent e)
-			{
-				if (e.getKeyCode() == KeyEvent.VK_ENTER)
-				{
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					Element element = manager.getSelectedElement();
-					if (element != null)
-					{
+					if (element != null) {
 						element.setDepth(Parser.parseDouble(zSizeField.getText(), element.getDepth()));
 						element.updateEndUVs();
 						manager.updateValues();
 					}
-
+					
 				}
 			}
 		});
-		zSizeField.addFocusListener(new FocusAdapter()
-		{
+		zSizeField.addFocusListener(new FocusAdapter() {
 			@Override
-			public void focusLost(FocusEvent e)
-			{
+			public void focusLost(FocusEvent e) {
 				Element element = manager.getSelectedElement();
-				if (element != null)
-				{
+				if (element != null) {
 					element.setDepth(Parser.parseDouble(zSizeField.getText(), element.getDepth()));
 					element.updateEndUVs();
 					manager.updateValues();
 				}
 			}
 		});
-		zSizeField.addMouseWheelListener(new MouseAdapter()
-		{
+		zSizeField.addMouseWheelListener(new MouseAdapter() {
 			@Override
-			public void mouseWheelMoved(MouseWheelEvent e)
-			{
+			public void mouseWheelMoved(MouseWheelEvent e) {
 				Element element = manager.getSelectedElement();
-				if (element != null)
-				{
+				if (element != null) {
 					float scrollAmount = e.getUnitsToScroll() / 3;
-					if ((e.getModifiers() & ActionEvent.SHIFT_MASK) == 1)
-					{
+					if ((e.getModifiers() & ActionEvent.SHIFT_MASK) == 1) {
 						scrollAmount /= 10;
 					}
 					element.setDepth(Parser.parseDouble(zSizeField.getText(), element.getDepth()) - scrollAmount);
@@ -233,18 +196,13 @@ public class SizePanel extends JPanel implements IValueUpdater
 				}
 			}
 		});
-
-		btnPlusX.addActionListener(e ->
-		{
-			if (manager.getSelectedElement() != null)
-			{
+		
+		btnPlusX.addActionListener(e-> {
+			if (manager.getSelectedElement() != null) {
 				Element cube = manager.getSelectedElement();
-				if ((e.getModifiers() & ActionEvent.SHIFT_MASK) == 1)
-				{
+				if ((e.getModifiers() & ActionEvent.SHIFT_MASK) == 1) {
 					cube.addWidth(0.1F);
-				}
-				else
-				{
+				} else {
 					cube.addWidth(1.0F);
 				}
 				cube.updateEndUVs();
@@ -254,18 +212,13 @@ public class SizePanel extends JPanel implements IValueUpdater
 		btnPlusX.setPreferredSize(new Dimension(62, 30));
 		btnPlusX.setFont(defaultFont);
 		btnPlusX.setToolTipText("<html>Increases the width.<br><b>Hold shift for decimals</b></html>");
-
-		btnPlusY.addActionListener(e ->
-		{
-			if (manager.getSelectedElement() != null)
-			{
+		
+		btnPlusY.addActionListener(e-> {
+			if (manager.getSelectedElement() != null) {
 				Element cube = manager.getSelectedElement();
-				if ((e.getModifiers() & ActionEvent.SHIFT_MASK) == 1)
-				{
+				if ((e.getModifiers() & ActionEvent.SHIFT_MASK) == 1) {
 					cube.addHeight(0.1F);
-				}
-				else
-				{
+				} else {
 					cube.addHeight(1.0F);
 				}
 				cube.updateEndUVs();
@@ -275,18 +228,13 @@ public class SizePanel extends JPanel implements IValueUpdater
 		btnPlusY.setPreferredSize(new Dimension(62, 30));
 		btnPlusY.setFont(defaultFont);
 		btnPlusY.setToolTipText("<html>Increases the height.<br><b>Hold shift for decimals</b></html>");
-
-		btnPlusZ.addActionListener(e ->
-		{
-			if (manager.getSelectedElement() != null)
-			{
+		
+		btnPlusZ.addActionListener(e-> {
+			if (manager.getSelectedElement() != null) {
 				Element cube = manager.getSelectedElement();
-				if ((e.getModifiers() & ActionEvent.SHIFT_MASK) == 1)
-				{
+				if ((e.getModifiers() & ActionEvent.SHIFT_MASK) == 1) {
 					cube.addDepth(0.1F);
-				}
-				else
-				{
+				} else {
 					cube.addDepth(1.0F);
 				}
 				cube.updateEndUVs();
@@ -296,18 +244,13 @@ public class SizePanel extends JPanel implements IValueUpdater
 		btnPlusZ.setPreferredSize(new Dimension(62, 30));
 		btnPlusZ.setFont(defaultFont);
 		btnPlusZ.setToolTipText("<html>Increases the depth.<br><b>Hold shift for decimals</b></html>");
-
-		btnNegX.addActionListener(e ->
-		{
-			if (manager.getSelectedElement() != null)
-			{
+		
+		btnNegX.addActionListener(e-> {
+			if (manager.getSelectedElement() != null) {
 				Element cube = manager.getSelectedElement();
-				if ((e.getModifiers() & ActionEvent.SHIFT_MASK) == 1)
-				{
+				if ((e.getModifiers() & ActionEvent.SHIFT_MASK) == 1) {
 					cube.addWidth(-0.1F);
-				}
-				else
-				{
+				} else {
 					cube.addWidth(-1.0F);
 				}
 				cube.updateEndUVs();
@@ -317,18 +260,13 @@ public class SizePanel extends JPanel implements IValueUpdater
 		btnNegX.setPreferredSize(new Dimension(62, 30));
 		btnNegX.setFont(defaultFont);
 		btnNegX.setToolTipText("<html>Decreases the width.<br><b>Hold shift for decimals</b></html>");
-
-		btnNegY.addActionListener(e ->
-		{
-			if (manager.getSelectedElement() != null)
-			{
+		
+		btnNegY.addActionListener(e-> {
+			if (manager.getSelectedElement() != null) {
 				Element cube = manager.getSelectedElement();
-				if ((e.getModifiers() & ActionEvent.SHIFT_MASK) == 1)
-				{
+				if ((e.getModifiers() & ActionEvent.SHIFT_MASK) == 1) {
 					cube.addHeight(-0.1F);
-				}
-				else
-				{
+				} else {
 					cube.addHeight(-1.0F);
 				}
 				cube.updateEndUVs();
@@ -338,18 +276,13 @@ public class SizePanel extends JPanel implements IValueUpdater
 		btnNegY.setPreferredSize(new Dimension(62, 30));
 		btnNegY.setFont(defaultFont);
 		btnNegY.setToolTipText("<html>Decreases the height.<br><b>Hold shift for decimals</b></html>");
-
-		btnNegZ.addActionListener(e ->
-		{
-			if (manager.getSelectedElement() != null)
-			{
+		
+		btnNegZ.addActionListener(e-> {
+			if (manager.getSelectedElement() != null) {
 				Element cube = manager.getSelectedElement();
-				if ((e.getModifiers() & ActionEvent.SHIFT_MASK) == 1)
-				{
+				if ((e.getModifiers() & ActionEvent.SHIFT_MASK) == 1) {
 					cube.addDepth(-0.1F);
-				}
-				else
-				{
+				} else {
 					cube.addDepth(-1.0F);
 				}
 				cube.updateEndUVs();
@@ -360,9 +293,8 @@ public class SizePanel extends JPanel implements IValueUpdater
 		btnNegZ.setFont(defaultFont);
 		btnNegZ.setToolTipText("<html>Decreases the depth.<br><b>Hold shift for decimals</b></html>");
 	}
-
-	public void addComponents()
-	{
+	
+	public void addComponents() {
 		add(btnPlusX);
 		add(btnPlusY);
 		add(btnPlusZ);
@@ -373,21 +305,17 @@ public class SizePanel extends JPanel implements IValueUpdater
 		add(btnNegY);
 		add(btnNegZ);
 	}
-
+	
 	@Override
-	public void updateValues(Element cube)
-	{
-		if (cube != null)
-		{
+	public void updateValues(Element cube) {
+		if (cube != null) {
 			xSizeField.setEnabled(true);
 			ySizeField.setEnabled(true);
 			zSizeField.setEnabled(true);
 			xSizeField.setText(df.format(cube.getWidth()));
 			ySizeField.setText(df.format(cube.getHeight()));
 			zSizeField.setText(df.format(cube.getDepth()));
-		}
-		else
-		{
+		} else {
 			xSizeField.setEnabled(false);
 			ySizeField.setEnabled(false);
 			zSizeField.setEnabled(false);

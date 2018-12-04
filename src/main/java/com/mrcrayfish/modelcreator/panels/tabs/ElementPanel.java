@@ -16,35 +16,31 @@ import com.mrcrayfish.modelcreator.panels.IValueUpdater;
 import com.mrcrayfish.modelcreator.panels.PositionPanel;
 import com.mrcrayfish.modelcreator.panels.SizePanel;
 
-public class ElementPanel extends JPanel implements IValueUpdater
-{
+public class ElementPanel extends JPanel implements IValueUpdater {
 	private static final long serialVersionUID = 1L;
-
+	
 	private ElementManager manager;
-
+	
 	private SizePanel panelSize;
 	private PositionPanel panelPosition;
 	private ElementExtraPanel panelExtras;
 	private GlobalPanel panelGlobal;
-
-	public ElementPanel(ElementManager manager)
-	{
+	
+	public ElementPanel(ElementManager manager) {
 		this.manager = manager;
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		initComponents();
 		addComponents();
 	}
-
-	public void initComponents()
-	{
+	
+	public void initComponents() {
 		panelSize = new SizePanel(manager);
 		panelPosition = new PositionPanel(manager);
 		panelExtras = new ElementExtraPanel(manager);
 		panelGlobal = new GlobalPanel(manager);
 	}
-
-	public void addComponents()
-	{
+	
+	public void addComponents() {
 		add(Box.createRigidArea(new Dimension(188, 5)));
 		add(panelSize);
 		add(Box.createRigidArea(new Dimension(188, 5)));
@@ -55,10 +51,9 @@ public class ElementPanel extends JPanel implements IValueUpdater
 		add(new JSeparator(SwingConstants.HORIZONTAL));
 		add(panelGlobal);
 	}
-
+	
 	@Override
-	public void updateValues(Element cube)
-	{
+	public void updateValues(Element cube) {
 		panelSize.updateValues(cube);
 		panelPosition.updateValues(cube);
 		panelExtras.updateValues(cube);

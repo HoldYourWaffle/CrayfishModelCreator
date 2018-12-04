@@ -1,22 +1,18 @@
 package com.mrcrayfish.modelcreator.util;
 
-public class FaceDimension
-{
+public class FaceDimension {
 	private double width, height;
-
-	public FaceDimension(double width, double height)
-	{
+	
+	public FaceDimension(double width, double height) {
 		this.width = width;
 		this.height = height;
 	}
-
-	public double getWidth()
-	{
+	
+	public double getWidth() {
 		return width;
 	}
-
-	public double getHeight()
-	{
+	
+	public double getHeight() {
 		return height;
 	}
 }

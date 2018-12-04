@@ -1,16 +1,13 @@
 package com.mrcrayfish.modelcreator.texture;
 
-public class TextureProperties
-{
+public class TextureProperties {
 	private boolean blurred;
 	
-	public void setBlurred(boolean blur)
-	{
+	public void setBlurred(boolean blur) {
 		blurred = blur;
 	}
-
-	public boolean isBlurred()
-	{
+	
+	public boolean isBlurred() {
 		return blurred;
 	}
 }
