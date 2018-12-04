@@ -84,17 +84,17 @@ public class TextureManager {
 	}
 	
 	private static boolean loadTexture(File image, TextureMeta meta, String location) throws IOException {
-		FileInputStream is = new FileInputStream(image);
-		Texture texture = TextureLoader.getTexture("PNG", is);
-		is.close();
-		
-		if (texture.getImageHeight() % 16 != 0 | texture.getImageWidth() % 16 != 0) {
-			texture.release();
-			return false;
+		try (FileInputStream is = new FileInputStream(image)) {
+			Texture texture = TextureLoader.getTexture("PNG", is);
+			
+			if (texture.getImageHeight() % 16 != 0 | texture.getImageWidth() % 16 != 0) {
+				texture.release();
+				return false;
+			}
+			ImageIcon icon = upscale(new ImageIcon(image.getAbsolutePath()), 256);
+			textureCache.add(new TextureEntry(image.getName().replace(".png", "").replaceAll("\\d*$", ""), texture, icon, image.getAbsolutePath(), meta, location));
+			return true;
 		}
-		ImageIcon icon = upscale(new ImageIcon(image.getAbsolutePath()), 256);
-		textureCache.add(new TextureEntry(image.getName().replace(".png", "").replaceAll("\\d*$", ""), texture, icon, image.getAbsolutePath(), meta, location));
-		return true;
 	}
 	
 	public static ImageIcon upscale(ImageIcon source, int length) {

@@ -3,7 +3,7 @@ apply plugin: "application"
 
 version = "pre5"
 mainClassName = "com.mrcrayfish.modelcreator.Start"
-sourceCompatibility = targetCompatibility = 1.8
+sourceCompatibility = targetCompatibility = 11
 
 repositories {
 	mavenCentral()

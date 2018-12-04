@@ -18,18 +18,15 @@ public class Uploader {
 	private static final String CLIENT_ID = "5cd0235db91ac6e";
 	
 	public static String upload(File file) throws Exception {
-		HttpURLConnection conn = null;
+		HttpURLConnection conn = (HttpURLConnection) new URL(UPLOAD_URL).openConnection();
+		conn.setDoOutput(true);
+		conn.setRequestProperty("Authorization", "Client-ID " + CLIENT_ID);
+		
 		InputStream responseIn = null;
 		
-		try {
-			conn = (HttpURLConnection) new URL(UPLOAD_URL).openConnection();
-			conn.setDoOutput(true);
-			conn.setRequestProperty("Authorization", "Client-ID " + CLIENT_ID);
-			
-			OutputStream out = conn.getOutputStream();
+		try (OutputStream out = conn.getOutputStream()) {
 			upload(new FileInputStream(file), out);
 			out.flush();
-			out.close();
 			
 			if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
 				responseIn = conn.getInputStream();

@@ -96,7 +96,7 @@ public class OriginPanel extends JPanel implements IValueUpdater {
 				Element element = manager.getSelectedElement();
 				if (element != null) {
 					float scrollAmount = e.getUnitsToScroll() / 3;
-					if ((e.getModifiers() & ActionEvent.SHIFT_MASK) == 1) {
+					if (e.isShiftDown()) {
 						scrollAmount /= 10;
 					}
 					element.setOriginX(Parser.parseDouble(xOriginField.getText(), element.getOriginX()) - scrollAmount);
@@ -137,7 +137,7 @@ public class OriginPanel extends JPanel implements IValueUpdater {
 				Element element = manager.getSelectedElement();
 				if (element != null) {
 					float scrollAmount = e.getUnitsToScroll() / 3;
-					if ((e.getModifiers() & ActionEvent.SHIFT_MASK) == 1) {
+					if (e.isShiftDown()) {
 						scrollAmount /= 10;
 					}
 					element.setOriginY(Parser.parseDouble(yOriginField.getText(), element.getOriginY()) - scrollAmount);
@@ -178,7 +178,7 @@ public class OriginPanel extends JPanel implements IValueUpdater {
 				Element element = manager.getSelectedElement();
 				if (element != null) {
 					float scrollAmount = e.getUnitsToScroll() / 3;
-					if ((e.getModifiers() & ActionEvent.SHIFT_MASK) == 1) {
+					if (e.isShiftDown()) {
 						scrollAmount /= 10;
 					}
 					element.setOriginZ(Parser.parseDouble(zOriginField.getText(), element.getOriginZ()) - scrollAmount);

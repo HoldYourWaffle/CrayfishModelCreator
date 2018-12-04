@@ -117,9 +117,10 @@ public class SharedLibraryLoader {
 	private String crc(InputStream input) {
 		if (input == null)
 			throw new IllegalArgumentException("input cannot be null.");
+		
 		CRC32 crc = new CRC32();
 		byte[] buffer = new byte[4096];
-		try {
+		try (input) {
 			while (true) {
 				int length = input.read(buffer);
 				if (length == -1)
@@ -127,12 +128,6 @@ public class SharedLibraryLoader {
 				crc.update(buffer, 0, length);
 			}
 		} catch (Exception ex) {
-			if (input != null) {
-				try {
-					input.close();
-				} catch (IOException e) {
-				}
-			}
 		}
 		return Long.toString(crc.getValue(), 16);
 	}
@@ -146,22 +141,15 @@ public class SharedLibraryLoader {
 		}
 		
 		// Read from JAR.
-		ZipFile file = null;
-		try {
-			file = new ZipFile(nativesJar);
+		try (ZipFile file = new ZipFile(nativesJar)) {
+			
 			ZipEntry entry = file.getEntry(path);
 			if (entry == null)
 				throw new RuntimeException("Couldn't find '" + path + "' in JAR: " + nativesJar);
 			return file.getInputStream(entry);
+			
 		} catch (IOException ex) {
 			throw new RuntimeException("Error reading '" + path + "' in JAR: " + nativesJar, ex);
-		} finally {
-			if (file != null) {
-				try {
-					file.close();
-				} catch (IOException e) {
-				}
-			}
 		}
 	}
 	
@@ -175,7 +163,7 @@ public class SharedLibraryLoader {
 	 *                   extracted. If null, the file's CRC will be used.
 	 * @return The extracted file.
 	 */
-	private File extractFile(String sourcePath, String dirName) throws IOException {
+	private File extractFile(String sourcePath, String dirName) {
 		try {
 			String sourceCrc = crc(readFile(sourcePath));
 			if (dirName == null)
@@ -232,6 +220,7 @@ public class SharedLibraryLoader {
 	 * Returns true if the parent directories of the file can be created and the
 	 * file can be written.
 	 */
+	@SuppressWarnings("resource")
 	private boolean canWrite(File file) {
 		File parent = file.getParentFile();
 		File testFile;
@@ -271,7 +260,7 @@ public class SharedLibraryLoader {
 		return false;
 	}
 	
-	private File extractFile(String sourcePath, String sourceCrc, File extractedFile) throws IOException {
+	private File extractFile(String sourcePath, String sourceCrc, File extractedFile) {
 		String extractedCrc = null;
 		if (extractedFile.exists()) {
 			try {
@@ -279,13 +268,12 @@ public class SharedLibraryLoader {
 			} catch (FileNotFoundException ignored) {
 			}
 		}
+		extractedFile.getParentFile().mkdirs();
 		
 		// If file doesn't exist or the CRC doesn't match, extract it to the temp dir.
 		if (extractedCrc == null || !extractedCrc.equals(sourceCrc)) {
-			try {
-				InputStream input = readFile(sourcePath);
-				extractedFile.getParentFile().mkdirs();
-				FileOutputStream output = new FileOutputStream(extractedFile);
+			try (InputStream input = readFile(sourcePath);
+				 FileOutputStream output = new FileOutputStream(extractedFile)) {
 				byte[] buffer = new byte[4096];
 				while (true) {
 					int length = input.read(buffer);
@@ -293,8 +281,6 @@ public class SharedLibraryLoader {
 						break;
 					output.write(buffer, 0, length);
 				}
-				input.close();
-				output.close();
 			} catch (IOException ex) {
 				throw new RuntimeException(
 						"Error extracting file: " + sourcePath + "\nTo: " + extractedFile.getAbsolutePath(), ex);

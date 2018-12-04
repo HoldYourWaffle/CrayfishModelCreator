@@ -27,6 +27,7 @@ public class Importer {
 	// Model Variables
 	private ElementManager manager;
 	
+	@SuppressWarnings("unused")
 	private boolean ignoreTextures = false;
 	
 	public Importer(ElementManager manager, String outputPath) {

@@ -102,7 +102,7 @@ public class PositionPanel extends JPanel implements IValueUpdater {
 				Element element = manager.getSelectedElement();
 				if (element != null) {
 					float scrollAmount = e.getUnitsToScroll() / 3;
-					if ((e.getModifiers() & ActionEvent.SHIFT_MASK) == 1) {
+					if (e.isShiftDown()) {
 						scrollAmount /= 10;
 					}
 					element.setStartX(Parser.parseDouble(xPositionField.getText(), element.getStartX()) - scrollAmount);
@@ -146,7 +146,7 @@ public class PositionPanel extends JPanel implements IValueUpdater {
 				Element element = manager.getSelectedElement();
 				if (element != null) {
 					float scrollAmount = e.getUnitsToScroll() / 3;
-					if ((e.getModifiers() & ActionEvent.SHIFT_MASK) == 1) {
+					if (e.isShiftDown()) {
 						scrollAmount /= 10;
 					}
 					element.setStartY(Parser.parseDouble(yPositionField.getText(), element.getStartY()) - scrollAmount);
@@ -190,7 +190,7 @@ public class PositionPanel extends JPanel implements IValueUpdater {
 				Element element = manager.getSelectedElement();
 				if (element != null) {
 					float scrollAmount = e.getUnitsToScroll() / 3;
-					if ((e.getModifiers() & ActionEvent.SHIFT_MASK) == 1) {
+					if (e.isShiftDown()) {
 						scrollAmount /= 10;
 					}
 					element.setStartZ(Parser.parseDouble(zPositionField.getText(), element.getStartZ()) - scrollAmount);

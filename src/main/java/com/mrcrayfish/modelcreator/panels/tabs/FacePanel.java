@@ -87,10 +87,10 @@ public class FacePanel extends JPanel implements IValueUpdater {
 		panelProperties = new FaceExtrasPanel(manager);
 		
 		Hashtable<Integer, JLabel> labelTable = new Hashtable<>();
-		labelTable.put(new Integer(0), new JLabel("0\u00b0"));
-		labelTable.put(new Integer(1), new JLabel("90\u00b0"));
-		labelTable.put(new Integer(2), new JLabel("180\u00b0"));
-		labelTable.put(new Integer(3), new JLabel("270\u00b0"));
+		labelTable.put(0, new JLabel("0\u00b0"));
+		labelTable.put(1, new JLabel("90\u00b0"));
+		labelTable.put(2, new JLabel("180\u00b0"));
+		labelTable.put(3, new JLabel("270\u00b0"));
 		
 		sliderPanel = new JPanel(new GridLayout(1, 1));
 		sliderPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(new Color(221, 221, 228), 5), "<html><b>Rotation</b></html>"));

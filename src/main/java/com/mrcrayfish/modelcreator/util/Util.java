@@ -25,19 +25,17 @@ public class Util {
 	
 	public static void loadModelFromJar(ElementManager manager, Class<?> clazz, String name) {
 		try {
-			InputStream is = clazz.getClassLoader().getResourceAsStream(name + ".model");
 			File file = File.createTempFile(name + ".model", "");
-			FileOutputStream fos = new FileOutputStream(file);
 			
-			byte[] buffer = new byte[1024];
-			
-			int len;
-			while ((len = is.read(buffer)) > 0) {
-				fos.write(buffer, 0, len);
+			try (InputStream is = clazz.getClassLoader().getResourceAsStream(name + ".model");
+				 FileOutputStream fos = new FileOutputStream(file)) {
+				byte[] buffer = new byte[1024];
+				
+				int len;
+				while ((len = is.read(buffer)) > 0) {
+					fos.write(buffer, 0, len);
+				}
 			}
-			
-			fos.close();
-			is.close();
 			
 			ProjectManager.loadProject(manager, file.getAbsolutePath());
 		} catch (FileNotFoundException e) {

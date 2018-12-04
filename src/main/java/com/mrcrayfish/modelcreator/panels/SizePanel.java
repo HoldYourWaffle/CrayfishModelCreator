@@ -88,7 +88,7 @@ public class SizePanel extends JPanel implements IValueUpdater {
 				Element element = manager.getSelectedElement();
 				if (element != null) {
 					float scrollAmount = e.getUnitsToScroll() / 3;
-					if ((e.getModifiers() & ActionEvent.SHIFT_MASK) == 1) {
+					if (e.isShiftDown()) {
 						scrollAmount /= 10;
 					}
 					element.setWidth(Parser.parseDouble(xSizeField.getText(), element.getWidth()) - scrollAmount);
@@ -132,7 +132,7 @@ public class SizePanel extends JPanel implements IValueUpdater {
 				Element element = manager.getSelectedElement();
 				if (element != null) {
 					float scrollAmount = e.getUnitsToScroll() / 3;
-					if ((e.getModifiers() & ActionEvent.SHIFT_MASK) == 1) {
+					if (e.isShiftDown()) {
 						scrollAmount /= 10;
 					}
 					element.setHeight(Parser.parseDouble(ySizeField.getText(), element.getHeight()) - scrollAmount);
@@ -187,7 +187,7 @@ public class SizePanel extends JPanel implements IValueUpdater {
 				Element element = manager.getSelectedElement();
 				if (element != null) {
 					float scrollAmount = e.getUnitsToScroll() / 3;
-					if ((e.getModifiers() & ActionEvent.SHIFT_MASK) == 1) {
+					if (e.isShiftDown()) {
 						scrollAmount /= 10;
 					}
 					element.setDepth(Parser.parseDouble(zSizeField.getText(), element.getDepth()) - scrollAmount);

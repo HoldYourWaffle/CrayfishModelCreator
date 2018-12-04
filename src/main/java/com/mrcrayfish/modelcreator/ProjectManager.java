@@ -34,23 +34,20 @@ public class ProjectManager {
 	
 	private static File[] extractFiles(String modelFile) {
 		List<File> files = new ArrayList<>();
-		try {
-			ZipInputStream zis = new ZipInputStream(new FileInputStream(modelFile));
-			
+		try (ZipInputStream zis = new ZipInputStream(new FileInputStream(modelFile))) {
 			ZipEntry ze = null;
 			while ((ze = zis.getNextEntry()) != null) {
 				File file = File.createTempFile(ze.getName(), "");
 				file.mkdirs();
 				
 				byte[] buffer = new byte[1024];
-				FileOutputStream fos = new FileOutputStream(file);
 				
-				int len;
-				while ((len = zis.read(buffer)) > 0) {
-					fos.write(buffer, 0, len);
+				try (FileOutputStream fos = new FileOutputStream(file)) {
+					int len;
+					while ((len = zis.read(buffer)) > 0) {
+						fos.write(buffer, 0, len);
+					}
 				}
-				
-				fos.close();
 				
 				files.add(file);
 			}
@@ -66,10 +63,8 @@ public class ProjectManager {
 	}
 	
 	public static void saveProject(ElementManager manager, String name) {
-		try {
-			FileOutputStream fos = new FileOutputStream(name);
-			ZipOutputStream zos = new ZipOutputStream(fos);
-			
+		try (FileOutputStream fos = new FileOutputStream(name);
+			ZipOutputStream zos = new ZipOutputStream(fos)) {
 			File file = getSaveFile(manager);
 			addToZipFile(file, zos);
 			file.delete();
@@ -91,9 +86,6 @@ public class ProjectManager {
 					}
 				}
 			}
-			
-			zos.close();
-			fos.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -136,24 +128,25 @@ public class ProjectManager {
 	}
 	
 	private static void addToZipFile(File file, ZipOutputStream zos, String folder) throws FileNotFoundException, IOException {
-		FileInputStream fis = new FileInputStream(file);
-		ZipEntry zipEntry = new ZipEntry(folder + file.getName());
-		zos.putNextEntry(zipEntry);
-		
-		byte[] bytes = new byte[1024];
-		int length;
-		while ((length = fis.read(bytes)) >= 0) {
-			zos.write(bytes, 0, length);
+		try (FileInputStream fis = new FileInputStream(file)) {
+			 ZipEntry zipEntry = new ZipEntry(folder + file.getName());
+			zos.putNextEntry(zipEntry);
+			
+			byte[] bytes = new byte[1024];
+			int length;
+			while ((length = fis.read(bytes)) >= 0) {
+				zos.write(bytes, 0, length);
+			}
+			
+			zos.closeEntry();
 		}
-		
-		zos.closeEntry();
-		fis.close();
 	}
 	
 	private static class Project {
 		public File model;
 		private List<ProjectTexture> textures;
 		
+		@SuppressWarnings("unused")
 		public Project(ElementManager manager, File[] files) {
 			textures = new ArrayList<>();
 			

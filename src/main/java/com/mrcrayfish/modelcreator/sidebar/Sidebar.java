@@ -1,16 +1,6 @@
 package com.mrcrayfish.modelcreator.sidebar;
 
-import static org.lwjgl.opengl.GL11.GL_BLEND;
-import static org.lwjgl.opengl.GL11.GL_ONE_MINUS_SRC_ALPHA;
-import static org.lwjgl.opengl.GL11.GL_QUADS;
-import static org.lwjgl.opengl.GL11.GL_SRC_ALPHA;
-import static org.lwjgl.opengl.GL11.glBegin;
-import static org.lwjgl.opengl.GL11.glBlendFunc;
-import static org.lwjgl.opengl.GL11.glColor3f;
-import static org.lwjgl.opengl.GL11.glDisable;
-import static org.lwjgl.opengl.GL11.glEnable;
-import static org.lwjgl.opengl.GL11.glEnd;
-import static org.lwjgl.opengl.GL11.glVertex2i;
+import static org.lwjgl.opengl.GL11.*;
 
 import org.newdawn.slick.Color;
 
@@ -23,6 +13,7 @@ public class Sidebar {
 		this.title = title;
 	}
 	
+	@SuppressWarnings("unused")
 	public void draw(int sidebarWidth, int canvasWidth, int canvasHeight, int frameHeight) {
 		glColor3f(0.866F, 0.866F, 0.894F);
 		glBegin(GL_QUADS);
@@ -44,6 +35,7 @@ public class Sidebar {
 		glDisable(GL_BLEND);
 	}
 	
+	@SuppressWarnings("unused")
 	public void handleInput(int canvasHeight) {
 		
 	}

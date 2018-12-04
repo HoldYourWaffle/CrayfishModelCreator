@@ -9,6 +9,8 @@ import com.jtattoo.plaf.fast.FastLookAndFeel;
 import com.mrcrayfish.modelcreator.util.SharedLibraryLoader;
 
 public class Start {
+	
+	@SuppressWarnings("unused")
 	public static void main(String[] args) {
 		SharedLibraryLoader.load(false);
 		
@@ -40,4 +42,5 @@ public class Start {
 		
 		new ModelCreator(Constants.NAME + " - " + Constants.VERSION);
 	}
+	
 }

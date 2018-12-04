@@ -37,10 +37,10 @@ public class PendingTexture {
 			String fileName = this.texture.getName().replace(".png", "").replaceAll("\\d*$", "");
 			Texture texture = TextureManager.getTexture(fileName);
 			if (texture == null) {
-				FileInputStream is = new FileInputStream(this.texture);
-				texture = TextureLoader.getTexture("PNG", is);
-				result = TextureManager.loadExternalTexture(this.texture, this.meta);
-				is.close();
+				try (FileInputStream is = new FileInputStream(this.texture)) {
+					texture = TextureLoader.getTexture("PNG", is);
+					result = TextureManager.loadExternalTexture(this.texture, this.meta);
+				}
 			} else {
 				result = true;
 			}

@@ -108,7 +108,7 @@ public class UVPanel extends JPanel implements IValueUpdater {
 				if (element != null) {
 					Face face = element.getSelectedFace();
 					float scrollAmount = e.getUnitsToScroll() / 3;
-					if ((e.getModifiers() & ActionEvent.SHIFT_MASK) == 1) {
+					if (e.isShiftDown()) {
 						scrollAmount /= 10;
 					}
 					face.setStartU(Parser.parseDouble(xStartField.getText(), face.getStartU()) - scrollAmount);
@@ -152,7 +152,7 @@ public class UVPanel extends JPanel implements IValueUpdater {
 				if (element != null) {
 					Face face = element.getSelectedFace();
 					float scrollAmount = e.getUnitsToScroll() / 3;
-					if ((e.getModifiers() & ActionEvent.SHIFT_MASK) == 1) {
+					if (e.isShiftDown()) {
 						scrollAmount /= 10;
 					}
 					face.setStartV(Parser.parseDouble(yStartField.getText(), face.getStartV()) - scrollAmount);
@@ -196,7 +196,7 @@ public class UVPanel extends JPanel implements IValueUpdater {
 				if (element != null) {
 					Face face = element.getSelectedFace();
 					float scrollAmount = e.getUnitsToScroll() / 3;
-					if ((e.getModifiers() & ActionEvent.SHIFT_MASK) == 1) {
+					if (e.isShiftDown()) {
 						scrollAmount /= 10;
 					}
 					face.setEndU(Parser.parseDouble(xEndField.getText(), face.getEndU()) - scrollAmount);
@@ -240,7 +240,7 @@ public class UVPanel extends JPanel implements IValueUpdater {
 				if (element != null) {
 					Face face = element.getSelectedFace();
 					float scrollAmount = e.getUnitsToScroll() / 3;
-					if ((e.getModifiers() & ActionEvent.SHIFT_MASK) == 1) {
+					if (e.isShiftDown()) {
 						scrollAmount /= 10;
 					}
 					face.setEndV(Parser.parseDouble(yEndField.getText(), face.getEndV()) - scrollAmount);
