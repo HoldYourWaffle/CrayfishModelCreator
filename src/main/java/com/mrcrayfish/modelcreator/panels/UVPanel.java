@@ -1,15 +1,5 @@
 package com.mrcrayfish.modelcreator.panels;
 
-import com.mrcrayfish.modelcreator.Icons;
-import com.mrcrayfish.modelcreator.element.Element;
-import com.mrcrayfish.modelcreator.element.ElementManager;
-import com.mrcrayfish.modelcreator.element.Face;
-import com.mrcrayfish.modelcreator.util.Parser;
-
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -22,6 +12,18 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseWheelEvent;
 import java.text.DecimalFormat;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+
+import com.mrcrayfish.modelcreator.Icons;
+import com.mrcrayfish.modelcreator.element.Element;
+import com.mrcrayfish.modelcreator.element.ElementManager;
+import com.mrcrayfish.modelcreator.element.Face;
+import com.mrcrayfish.modelcreator.util.Parser;
 
 public class UVPanel extends JPanel implements IValueUpdater
 {
@@ -77,7 +79,7 @@ public class UVPanel extends JPanel implements IValueUpdater
 		Font defaultFont = new Font("SansSerif", Font.BOLD, 20);
 		xStartField.setSize(new Dimension(62, 30));
 		xStartField.setFont(defaultFont);
-		xStartField.setHorizontalAlignment(JTextField.CENTER);
+		xStartField.setHorizontalAlignment(SwingConstants.CENTER);
 		xStartField.addKeyListener(new KeyAdapter()
 		{
 			@Override
@@ -133,7 +135,7 @@ public class UVPanel extends JPanel implements IValueUpdater
 
 		yStartField.setSize(new Dimension(62, 30));
 		yStartField.setFont(defaultFont);
-		yStartField.setHorizontalAlignment(JTextField.CENTER);
+		yStartField.setHorizontalAlignment(SwingConstants.CENTER);
 		yStartField.addKeyListener(new KeyAdapter()
 		{
 			@Override
@@ -188,7 +190,7 @@ public class UVPanel extends JPanel implements IValueUpdater
 
 		xEndField.setSize(new Dimension(62, 30));
 		xEndField.setFont(defaultFont);
-		xEndField.setHorizontalAlignment(JTextField.CENTER);
+		xEndField.setHorizontalAlignment(SwingConstants.CENTER);
 		xEndField.addKeyListener(new KeyAdapter()
 		{
 			@Override
@@ -243,7 +245,7 @@ public class UVPanel extends JPanel implements IValueUpdater
 
 		yEndField.setSize(new Dimension(62, 30));
 		yEndField.setFont(defaultFont);
-		yEndField.setHorizontalAlignment(JTextField.CENTER);
+		yEndField.setHorizontalAlignment(SwingConstants.CENTER);
 		yEndField.addKeyListener(new KeyAdapter()
 		{
 			@Override

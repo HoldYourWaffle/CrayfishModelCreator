@@ -1,28 +1,34 @@
 package com.mrcrayfish.modelcreator;
 
-import com.mrcrayfish.modelcreator.dialog.WelcomeDialog;
-import com.mrcrayfish.modelcreator.element.Element;
-import com.mrcrayfish.modelcreator.element.ElementManager;
-import com.mrcrayfish.modelcreator.panels.SidebarPanel;
-import com.mrcrayfish.modelcreator.screenshot.PendingScreenshot;
-import com.mrcrayfish.modelcreator.screenshot.Screenshot;
-import com.mrcrayfish.modelcreator.sidebar.Sidebar;
-import com.mrcrayfish.modelcreator.sidebar.UVSidebar;
-import com.mrcrayfish.modelcreator.texture.PendingTexture;
-import com.mrcrayfish.modelcreator.util.FontManager;
-import org.lwjgl.LWJGLException;
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.Display;
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.util.glu.GLU;
-import org.newdawn.slick.Color;
+import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
+import static org.lwjgl.opengl.GL11.GL_CULL_FACE;
+import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
+import static org.lwjgl.opengl.GL11.GL_DEPTH_TEST;
+import static org.lwjgl.opengl.GL11.GL_LIGHTING;
+import static org.lwjgl.opengl.GL11.GL_LINES;
+import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
+import static org.lwjgl.opengl.GL11.GL_PROJECTION;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
+import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
+import static org.lwjgl.opengl.GL11.glBegin;
+import static org.lwjgl.opengl.GL11.glClear;
+import static org.lwjgl.opengl.GL11.glClearColor;
+import static org.lwjgl.opengl.GL11.glColor3d;
+import static org.lwjgl.opengl.GL11.glColor3f;
+import static org.lwjgl.opengl.GL11.glDisable;
+import static org.lwjgl.opengl.GL11.glEnable;
+import static org.lwjgl.opengl.GL11.glEnd;
+import static org.lwjgl.opengl.GL11.glLineWidth;
+import static org.lwjgl.opengl.GL11.glLoadIdentity;
+import static org.lwjgl.opengl.GL11.glMatrixMode;
+import static org.lwjgl.opengl.GL11.glPopMatrix;
+import static org.lwjgl.opengl.GL11.glPushMatrix;
+import static org.lwjgl.opengl.GL11.glRotated;
+import static org.lwjgl.opengl.GL11.glTranslatef;
+import static org.lwjgl.opengl.GL11.glVertex2i;
+import static org.lwjgl.opengl.GL11.glVertex3i;
+import static org.lwjgl.opengl.GL11.glViewport;
 
-import javax.swing.BorderFactory;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.JScrollPane;
 import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Dimension;
@@ -39,7 +45,31 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static org.lwjgl.opengl.GL11.*;
+import javax.swing.BorderFactory;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
+
+import org.lwjgl.LWJGLException;
+import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.util.glu.GLU;
+import org.newdawn.slick.Color;
+
+import com.mrcrayfish.modelcreator.dialog.WelcomeDialog;
+import com.mrcrayfish.modelcreator.element.Element;
+import com.mrcrayfish.modelcreator.element.ElementManager;
+import com.mrcrayfish.modelcreator.panels.SidebarPanel;
+import com.mrcrayfish.modelcreator.screenshot.PendingScreenshot;
+import com.mrcrayfish.modelcreator.screenshot.Screenshot;
+import com.mrcrayfish.modelcreator.sidebar.Sidebar;
+import com.mrcrayfish.modelcreator.sidebar.UVSidebar;
+import com.mrcrayfish.modelcreator.texture.PendingTexture;
+import com.mrcrayfish.modelcreator.util.FontManager;
 
 public class ModelCreator extends JFrame
 {
@@ -50,7 +80,7 @@ public class ModelCreator extends JFrame
 	public static boolean transparent = Settings.getTransparencyMode();
 
 	// Canvas Variables
-	private final static AtomicReference<Dimension> newCanvasSize = new AtomicReference<Dimension>();
+	private final static AtomicReference<Dimension> newCanvasSize = new AtomicReference<>();
 	private final Canvas canvas;
 	private int width = 990, height = 800;
 
@@ -61,7 +91,7 @@ public class ModelCreator extends JFrame
 	private Element grabbed = null;
 
 	// Texture Loading Cache
-	public List<PendingTexture> pendingTextures = new ArrayList<PendingTexture>();
+	public List<PendingTexture> pendingTextures = new ArrayList<>();
 	private PendingScreenshot screenshot = null;
 
 	private int lastMouseX, lastMouseY;
@@ -157,14 +187,14 @@ public class ModelCreator extends JFrame
 		manager = new SidebarPanel(this);
 		scroll = new JScrollPane((JPanel) manager);
 		scroll.setBorder(BorderFactory.createEmptyBorder());
-		scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		add(scroll, BorderLayout.EAST);
 	}
 
 	private List<Image> getIcons()
 	{
-		List<Image> icons = new ArrayList<Image>();
+		List<Image> icons = new ArrayList<>();
 		icons.add(Toolkit.getDefaultToolkit().getImage("res/icons/set/icon_16x.png"));
 		icons.add(Toolkit.getDefaultToolkit().getImage("res/icons/set/icon_32x.png"));
 		icons.add(Toolkit.getDefaultToolkit().getImage("res/icons/set/icon_64x.png"));
@@ -422,8 +452,8 @@ public class ModelCreator extends JFrame
 					int newMouseX = Mouse.getX();
 					int newMouseY = Mouse.getY();
 
-					int xMovement = (int) ((newMouseX - lastMouseX) / 20);
-					int yMovement = (int) ((newMouseY - lastMouseY) / 20);
+					int xMovement = (newMouseX - lastMouseX) / 20;
+					int yMovement = (newMouseY - lastMouseY) / 20;
 
 					if (xMovement != 0 | yMovement != 0)
 					{
@@ -523,15 +553,15 @@ public class ModelCreator extends JFrame
 				if (Mouse.isButtonDown(0))
 				{
 					final float modifier = (cameraMod * 0.05f);
-					camera.addX((float) (Mouse.getDX() * 0.01F) * modifier);
-					camera.addY((float) (Mouse.getDY() * 0.01F) * modifier);
+					camera.addX(Mouse.getDX() * 0.01F * modifier);
+					camera.addY(Mouse.getDY() * 0.01F * modifier);
 				}
 				else if (Mouse.isButtonDown(1))
 				{
 					final float modifier = applyLimit(cameraMod * 0.1f);
-					camera.rotateX(-(float) (Mouse.getDY() * 0.5F) * modifier);
+					camera.rotateX(-(Mouse.getDY() * 0.5F) * modifier);
 					final float rxAbs = Math.abs(camera.getRX());
-					camera.rotateY((rxAbs >= 90 && rxAbs < 270 ? -1 : 1) * (float) (Mouse.getDX() * 0.5F) * modifier);
+					camera.rotateY((rxAbs >= 90 && rxAbs < 270 ? -1 : 1) * (Mouse.getDX() * 0.5F) * modifier);
 				}
 
 				final float wheel = Mouse.getDWheel();

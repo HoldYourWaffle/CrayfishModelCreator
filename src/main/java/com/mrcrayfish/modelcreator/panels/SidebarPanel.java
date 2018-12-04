@@ -1,22 +1,5 @@
 package com.mrcrayfish.modelcreator.panels;
 
-import com.mrcrayfish.modelcreator.Icons;
-import com.mrcrayfish.modelcreator.ModelCreator;
-import com.mrcrayfish.modelcreator.element.Element;
-import com.mrcrayfish.modelcreator.element.ElementManager;
-import com.mrcrayfish.modelcreator.panels.tabs.ElementPanel;
-import com.mrcrayfish.modelcreator.panels.tabs.FacePanel;
-import com.mrcrayfish.modelcreator.panels.tabs.RotationPanel;
-import com.mrcrayfish.modelcreator.texture.PendingTexture;
-
-import javax.swing.DefaultListModel;
-import javax.swing.JButton;
-import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
-import javax.swing.JTextField;
-import javax.swing.SpringLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -28,6 +11,24 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+import javax.swing.SpringLayout;
+import javax.swing.SwingConstants;
+
+import com.mrcrayfish.modelcreator.Icons;
+import com.mrcrayfish.modelcreator.ModelCreator;
+import com.mrcrayfish.modelcreator.element.Element;
+import com.mrcrayfish.modelcreator.element.ElementManager;
+import com.mrcrayfish.modelcreator.panels.tabs.ElementPanel;
+import com.mrcrayfish.modelcreator.panels.tabs.FacePanel;
+import com.mrcrayfish.modelcreator.panels.tabs.RotationPanel;
+import com.mrcrayfish.modelcreator.texture.PendingTexture;
+
 public class SidebarPanel extends JPanel implements ElementManager
 {
 	private static final long serialVersionUID = 1L;
@@ -36,8 +37,8 @@ public class SidebarPanel extends JPanel implements ElementManager
 
 	// Swing Variables
 	private SpringLayout layout;
-	private DefaultListModel<Element> model = new DefaultListModel<Element>();
-	private JList<Element> list = new JList<Element>();
+	private DefaultListModel<Element> model = new DefaultListModel<>();
+	private JList<Element> list = new JList<>();
 	private JScrollPane scrollPane;
 	private JPanel btnContainer;
 	private JButton btnAdd = new JButton();
@@ -155,7 +156,7 @@ public class SidebarPanel extends JPanel implements ElementManager
 		tabbedPane.add("Rotation", new RotationPanel(this));
 		tabbedPane.add("Faces", new FacePanel(this));
 		tabbedPane.setPreferredSize(new Dimension(190, 500));
-		tabbedPane.setTabPlacement(JTabbedPane.TOP);
+		tabbedPane.setTabPlacement(SwingConstants.TOP);
 		tabbedPane.addChangeListener(c ->
 		{
 			if (tabbedPane.getSelectedIndex() == 2)
@@ -182,7 +183,7 @@ public class SidebarPanel extends JPanel implements ElementManager
 	{
 		int i = list.getSelectedIndex();
 		if (i != -1)
-			return (Element) model.getElementAt(i);
+			return model.getElementAt(i);
 		return null;
 	}
 
@@ -207,7 +208,7 @@ public class SidebarPanel extends JPanel implements ElementManager
 	@Override
 	public List<Element> getAllElements()
 	{
-		List<Element> list = new ArrayList<Element>();
+		List<Element> list = new ArrayList<>();
 		for (int i = 0; i < model.size(); i++)
 		{
 			list.add(model.getElementAt(i));

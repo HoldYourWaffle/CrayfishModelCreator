@@ -1,14 +1,5 @@
 package com.mrcrayfish.modelcreator.panels;
 
-import com.mrcrayfish.modelcreator.Icons;
-import com.mrcrayfish.modelcreator.element.Element;
-import com.mrcrayfish.modelcreator.element.ElementManager;
-import com.mrcrayfish.modelcreator.util.Parser;
-
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -21,6 +12,17 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseWheelEvent;
 import java.text.DecimalFormat;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+
+import com.mrcrayfish.modelcreator.Icons;
+import com.mrcrayfish.modelcreator.element.Element;
+import com.mrcrayfish.modelcreator.element.ElementManager;
+import com.mrcrayfish.modelcreator.util.Parser;
 
 public class SizePanel extends JPanel implements IValueUpdater
 {
@@ -69,7 +71,7 @@ public class SizePanel extends JPanel implements IValueUpdater
 		Font defaultFont = new Font("SansSerif", Font.BOLD, 20);
 		xSizeField.setSize(new Dimension(62, 30));
 		xSizeField.setFont(defaultFont);
-		xSizeField.setHorizontalAlignment(JTextField.CENTER);
+		xSizeField.setHorizontalAlignment(SwingConstants.CENTER);
 		xSizeField.addKeyListener(new KeyAdapter()
 		{
 			@Override
@@ -124,7 +126,7 @@ public class SizePanel extends JPanel implements IValueUpdater
 
 		ySizeField.setSize(new Dimension(62, 30));
 		ySizeField.setFont(defaultFont);
-		ySizeField.setHorizontalAlignment(JTextField.CENTER);
+		ySizeField.setHorizontalAlignment(SwingConstants.CENTER);
 		ySizeField.addKeyListener(new KeyAdapter()
 		{
 			@Override
@@ -179,7 +181,7 @@ public class SizePanel extends JPanel implements IValueUpdater
 
 		zSizeField.setSize(new Dimension(62, 30));
 		zSizeField.setFont(defaultFont);
-		zSizeField.setHorizontalAlignment(JTextField.CENTER);
+		zSizeField.setHorizontalAlignment(SwingConstants.CENTER);
 		zSizeField.addKeyListener(new KeyAdapter()
 		{
 			@Override

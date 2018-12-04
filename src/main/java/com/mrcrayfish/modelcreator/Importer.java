@@ -19,7 +19,7 @@ import com.mrcrayfish.modelcreator.texture.PendingTexture;
 
 public class Importer
 {
-	private Map<String, String> textureMap = new HashMap<String, String>();
+	private Map<String, String> textureMap = new HashMap<>();
 	private String[] faceNames = { "north", "east", "south", "west", "up", "down" };
 
 	// Input File

@@ -25,6 +25,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -39,7 +40,7 @@ import com.mrcrayfish.modelcreator.panels.SidebarPanel;
 
 public class TextureManager
 {
-	private static List<TextureEntry> textureCache = new ArrayList<TextureEntry>();
+	private static List<TextureEntry> textureCache = new ArrayList<>();
 
 	public static Texture cobblestone;
 	public static Texture dirt;
@@ -61,7 +62,7 @@ public class TextureManager
 
 				ImageIcon icon = null;
 
-				List<Texture> textures = new ArrayList<Texture>();
+				List<Texture> textures = new ArrayList<>();
 
 				int xpos = 0;
 				while (xpos + fWidth <= bimage.getWidth())
@@ -179,7 +180,7 @@ public class TextureManager
 		Font defaultFont = new Font("SansSerif", Font.BOLD, 18);
 
 		DefaultListModel<String> model = generate();
-		JList<String> list = new JList<String>();
+		JList<String> list = new JList<>();
 		list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 		list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
 		list.setCellRenderer(new TextureCellRenderer());
@@ -190,7 +191,7 @@ public class TextureManager
 		list.setBackground(new Color(221, 221, 228));
 		JScrollPane scroll = new JScrollPane(list);
 		scroll.getVerticalScrollBar().setVisible(false);
-		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
 		JPanel panel = new JPanel(new GridLayout(1, 3));
 		panel.setPreferredSize(new Dimension(1000, 40));
@@ -247,24 +248,20 @@ public class TextureManager
 				try
 				{
 					File meta = new File(chooser.getSelectedFile().getAbsolutePath() + ".mcmeta");
-					manager.addPendingTexture(new PendingTexture(chooser.getSelectedFile(), meta, new TextureCallback()
+					manager.addPendingTexture(new PendingTexture(chooser.getSelectedFile(), meta, (success, texture) ->
 					{
-						@Override
-						public void callback(boolean success, String texture)
+						if (success)
 						{
-							if (success)
-							{
-								model.insertElementAt(texture.replace(".png", ""), 0);
-							}
-							else
-							{
-								JOptionPane error = new JOptionPane();
-								error.setMessage("Width and height must be a multiple of 16.");
-								JDialog dialog = error.createDialog(btnImport, "Texture Error");
-								dialog.setLocationRelativeTo(null);
-								dialog.setModal(false);
-								dialog.setVisible(true);
-							}
+							model.insertElementAt(texture.replace(".png", ""), 0);
+						}
+						else
+						{
+							JOptionPane error = new JOptionPane();
+							error.setMessage("Width and height must be a multiple of 16.");
+							JDialog dialog = error.createDialog(btnImport, "Texture Error");
+							dialog.setLocationRelativeTo(null);
+							dialog.setModal(false);
+							dialog.setVisible(true);
 						}
 					}));
 				}
@@ -302,7 +299,7 @@ public class TextureManager
 
 	private static DefaultListModel<String> generate()
 	{
-		DefaultListModel<String> model = new DefaultListModel<String>();
+		DefaultListModel<String> model = new DefaultListModel<>();
 		for (TextureEntry entry : textureCache)
 		{
 			model.addElement(entry.getName());

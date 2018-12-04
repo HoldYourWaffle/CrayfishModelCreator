@@ -18,7 +18,6 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.mrcrayfish.modelcreator.screenshot.PendingScreenshot;
 import com.mrcrayfish.modelcreator.screenshot.Screenshot;
-import com.mrcrayfish.modelcreator.screenshot.ScreenshotCallback;
 import com.mrcrayfish.modelcreator.screenshot.Uploader;
 import com.mrcrayfish.modelcreator.util.Util;
 
@@ -376,20 +375,16 @@ public class Menu extends JMenuBar
 		itemShareFacebook.addActionListener(a ->
 		{
 			creator.activeSidebar = null;
-			creator.startScreenshot(new PendingScreenshot(null, new ScreenshotCallback()
+			creator.startScreenshot(new PendingScreenshot(null, file ->
 			{
-				@Override
-				public void callback(File file)
+				try
 				{
-					try
-					{
-						String url = Uploader.upload(file);
-						Screenshot.shareToFacebook(url);
-					}
-					catch (Exception e)
-					{
-						e.printStackTrace();
-					}
+					String url = Uploader.upload(file);
+					Screenshot.shareToFacebook(url);
+				}
+				catch (Exception e)
+				{
+					e.printStackTrace();
 				}
 			}));
 		});
@@ -397,20 +392,16 @@ public class Menu extends JMenuBar
 		itemShareTwitter.addActionListener(a ->
 		{
 			creator.activeSidebar = null;
-			creator.startScreenshot(new PendingScreenshot(null, new ScreenshotCallback()
+			creator.startScreenshot(new PendingScreenshot(null, file ->
 			{
-				@Override
-				public void callback(File file)
+				try
 				{
-					try
-					{
-						String url = Uploader.upload(file);
-						Screenshot.shareToTwitter(url);
-					}
-					catch (Exception e)
-					{
-						e.printStackTrace();
-					}
+					String url = Uploader.upload(file);
+					Screenshot.shareToTwitter(url);
+				}
+				catch (Exception e)
+				{
+					e.printStackTrace();
 				}
 			}));
 		});
@@ -418,20 +409,16 @@ public class Menu extends JMenuBar
 		itemShareReddit.addActionListener(a ->
 		{
 			creator.activeSidebar = null;
-			creator.startScreenshot(new PendingScreenshot(null, new ScreenshotCallback()
+			creator.startScreenshot(new PendingScreenshot(null, file ->
 			{
-				@Override
-				public void callback(File file)
+				try
 				{
-					try
-					{
-						String url = Uploader.upload(file);
-						Screenshot.shareToReddit(url);
-					}
-					catch (Exception e)
-					{
-						e.printStackTrace();
-					}
+					String url = Uploader.upload(file);
+					Screenshot.shareToReddit(url);
+				}
+				catch (Exception e)
+				{
+					e.printStackTrace();
 				}
 			}));
 		});
@@ -439,49 +426,38 @@ public class Menu extends JMenuBar
 		itemImgurLink.addActionListener(a ->
 		{
 			creator.activeSidebar = null;
-			creator.startScreenshot(new PendingScreenshot(null, new ScreenshotCallback()
+			creator.startScreenshot(new PendingScreenshot(null, file -> SwingUtilities.invokeLater(() ->
 			{
-				@Override
-				public void callback(File file)
+				try
 				{
-					SwingUtilities.invokeLater(new Runnable()
+					String url = Uploader.upload(file);
+
+					JOptionPane message = new JOptionPane();
+					String title;
+
+					if (url != null && !url.equals("null"))
 					{
-						@Override
-						public void run()
-						{
-							try
-							{
-								String url = Uploader.upload(file);
+						StringSelection text = new StringSelection(url);
+						Toolkit.getDefaultToolkit().getSystemClipboard().setContents(text, null);
+						title = "Success";
+						message.setMessage("<html><b>" + url + "</b> has been copied to your clipboard.</html>");
+					}
+					else
+					{
+						title = "Error";
+						message.setMessage("Failed to upload screenshot. Check your internet connection then try again.");
+					}
 
-								JOptionPane message = new JOptionPane();
-								String title;
-
-								if (url != null && !url.equals("null"))
-								{
-									StringSelection text = new StringSelection(url);
-									Toolkit.getDefaultToolkit().getSystemClipboard().setContents(text, null);
-									title = "Success";
-									message.setMessage("<html><b>" + url + "</b> has been copied to your clipboard.</html>");
-								}
-								else
-								{
-									title = "Error";
-									message.setMessage("Failed to upload screenshot. Check your internet connection then try again.");
-								}
-
-								JDialog dialog = message.createDialog(Menu.this, title);
-								dialog.setLocationRelativeTo(null);
-								dialog.setModal(false);
-								dialog.setVisible(true);
-							}
-							catch (Exception e)
-							{
-								e.printStackTrace();
-							}
-						}
-					});
+					JDialog dialog = message.createDialog(Menu.this, title);
+					dialog.setLocationRelativeTo(null);
+					dialog.setModal(false);
+					dialog.setVisible(true);
 				}
-			}));
+				catch (Exception e)
+				{
+					e.printStackTrace();
+				}
+			})));
 		});
 
 		itemMF.addActionListener(a ->

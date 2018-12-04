@@ -1,15 +1,7 @@
 package com.mrcrayfish.modelcreator.panels;
 
-import com.mrcrayfish.modelcreator.Icons;
-import com.mrcrayfish.modelcreator.element.Element;
-import com.mrcrayfish.modelcreator.element.ElementManager;
-import com.mrcrayfish.modelcreator.util.Parser;
-
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -21,6 +13,17 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseWheelEvent;
 import java.text.DecimalFormat;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+
+import com.mrcrayfish.modelcreator.Icons;
+import com.mrcrayfish.modelcreator.element.Element;
+import com.mrcrayfish.modelcreator.element.ElementManager;
+import com.mrcrayfish.modelcreator.util.Parser;
 
 public class PositionPanel extends JPanel implements IValueUpdater
 {
@@ -47,7 +50,7 @@ public class PositionPanel extends JPanel implements IValueUpdater
 		setLayout(new GridLayout(3, 3, 4, 4));
 		setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(new Color(221, 221, 228), 5), "<html><b>Position</b></html>"));
 		setMaximumSize(new Dimension(186, 124));
-		setAlignmentX(JPanel.CENTER_ALIGNMENT);
+		setAlignmentX(Component.CENTER_ALIGNMENT);
 		initComponents();
 		initProperties();
 		addComponents();
@@ -71,7 +74,7 @@ public class PositionPanel extends JPanel implements IValueUpdater
 		Font defaultFont = new Font("SansSerif", Font.BOLD, 20);
 		xPositionField.setSize(new Dimension(62, 30));
 		xPositionField.setFont(defaultFont);
-		xPositionField.setHorizontalAlignment(JTextField.CENTER);
+		xPositionField.setHorizontalAlignment(SwingConstants.CENTER);
 		xPositionField.addKeyListener(new KeyAdapter()
 		{
 			@Override
@@ -126,7 +129,7 @@ public class PositionPanel extends JPanel implements IValueUpdater
 
 		yPositionField.setSize(new Dimension(62, 30));
 		yPositionField.setFont(defaultFont);
-		yPositionField.setHorizontalAlignment(JTextField.CENTER);
+		yPositionField.setHorizontalAlignment(SwingConstants.CENTER);
 		yPositionField.addKeyListener(new KeyAdapter()
 		{
 			@Override
@@ -181,7 +184,7 @@ public class PositionPanel extends JPanel implements IValueUpdater
 
 		zPositionField.setSize(new Dimension(62, 30));
 		zPositionField.setFont(defaultFont);
-		zPositionField.setHorizontalAlignment(JTextField.CENTER);
+		zPositionField.setHorizontalAlignment(SwingConstants.CENTER);
 		zPositionField.addKeyListener(new KeyAdapter()
 		{
 			@Override

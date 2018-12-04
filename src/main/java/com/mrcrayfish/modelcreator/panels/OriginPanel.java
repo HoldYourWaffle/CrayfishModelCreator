@@ -1,14 +1,5 @@
 package com.mrcrayfish.modelcreator.panels;
 
-import com.mrcrayfish.modelcreator.Icons;
-import com.mrcrayfish.modelcreator.element.Element;
-import com.mrcrayfish.modelcreator.element.ElementManager;
-import com.mrcrayfish.modelcreator.util.Parser;
-
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -21,6 +12,17 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseWheelEvent;
 import java.text.DecimalFormat;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+
+import com.mrcrayfish.modelcreator.Icons;
+import com.mrcrayfish.modelcreator.element.Element;
+import com.mrcrayfish.modelcreator.element.ElementManager;
+import com.mrcrayfish.modelcreator.util.Parser;
 
 public class OriginPanel extends JPanel implements IValueUpdater
 {
@@ -69,7 +71,7 @@ public class OriginPanel extends JPanel implements IValueUpdater
 		Font defaultFont = new Font("SansSerif", Font.BOLD, 20);
 		xOriginField.setSize(new Dimension(62, 30));
 		xOriginField.setFont(defaultFont);
-		xOriginField.setHorizontalAlignment(JTextField.CENTER);
+		xOriginField.setHorizontalAlignment(SwingConstants.CENTER);
 		xOriginField.addKeyListener(new KeyAdapter()
 		{
 			@Override
@@ -121,7 +123,7 @@ public class OriginPanel extends JPanel implements IValueUpdater
 
 		yOriginField.setSize(new Dimension(62, 30));
 		yOriginField.setFont(defaultFont);
-		yOriginField.setHorizontalAlignment(JTextField.CENTER);
+		yOriginField.setHorizontalAlignment(SwingConstants.CENTER);
 		yOriginField.addKeyListener(new KeyAdapter()
 		{
 			@Override
@@ -173,7 +175,7 @@ public class OriginPanel extends JPanel implements IValueUpdater
 
 		zOriginField.setSize(new Dimension(62, 30));
 		zOriginField.setFont(defaultFont);
-		zOriginField.setHorizontalAlignment(JTextField.CENTER);
+		zOriginField.setHorizontalAlignment(SwingConstants.CENTER);
 		zOriginField.addKeyListener(new KeyAdapter()
 		{
 			@Override

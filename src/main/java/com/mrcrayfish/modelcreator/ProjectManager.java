@@ -37,7 +37,7 @@ public class ProjectManager
 
 	private static File[] extractFiles(String modelFile)
 	{
-		List<File> files = new ArrayList<File>();
+		List<File> files = new ArrayList<>();
 		try
 		{
 			ZipInputStream zis = new ZipInputStream(new FileInputStream(modelFile));
@@ -126,7 +126,7 @@ public class ProjectManager
 
 	private static String[] getTextureLocations(ElementManager manager)
 	{
-		List<String> locations = new ArrayList<String>();
+		List<String> locations = new ArrayList<>();
 		for (Element cuboid : manager.getAllElements())
 		{
 			for (Face face : cuboid.getAllFaces())
@@ -143,7 +143,7 @@ public class ProjectManager
 	
 	private static String[] getMetaLocations(ElementManager manager)
 	{
-		List<String> locations = new ArrayList<String>();
+		List<String> locations = new ArrayList<>();
 		for (Element cuboid : manager.getAllElements())
 		{
 			for (Face face : cuboid.getAllFaces())
@@ -192,7 +192,7 @@ public class ProjectManager
 
 		public Project(ElementManager manager, File[] files)
 		{
-			textures = new ArrayList<ProjectTexture>();
+			textures = new ArrayList<>();
 
 			for (File file : files)
 			{

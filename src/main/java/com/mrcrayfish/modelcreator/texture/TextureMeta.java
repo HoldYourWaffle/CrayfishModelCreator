@@ -86,8 +86,8 @@ public class TextureMeta
 					JsonArray frames = animationObj.get("frames").getAsJsonArray();
 					if (frames.size() > 0)
 					{
-						List<Integer> frameList = new ArrayList<Integer>();
-						Map<Integer, Integer> customTimes = new HashMap<Integer, Integer>();
+						List<Integer> frameList = new ArrayList<>();
+						Map<Integer, Integer> customTimes = new HashMap<>();
 
 						for (int i = 0; i < frames.size(); i++)
 						{

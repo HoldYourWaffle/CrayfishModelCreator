@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSlider;
+import javax.swing.SwingConstants;
 
 import com.mrcrayfish.modelcreator.element.Element;
 import com.mrcrayfish.modelcreator.element.ElementManager;
@@ -52,7 +53,7 @@ public class RotationPanel extends JPanel implements IValueUpdater
 
 	public void initMenu()
 	{
-		model = new DefaultComboBoxModel<String>();
+		model = new DefaultComboBoxModel<>();
 		model.addElement("<html><div style='padding:5px;color:red;'><b>X</b></html>");
 		model.addElement("<html><div style='padding:5px;color:green;'><b>Y</b></html>");
 		model.addElement("<html><div style='padding:5px;color:blue;'><b>Z</b></html>");
@@ -64,7 +65,7 @@ public class RotationPanel extends JPanel implements IValueUpdater
 
 		axisPanel = new JPanel(new GridLayout(1, 1));
 		axisPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(new Color(221, 221, 228), 5), "<html><b>Axis</b></html>"));
-		axisList = new JComboBox<String>();
+		axisList = new JComboBox<>();
 		axisList.setModel(model);
 		axisList.setToolTipText("The axis the element will rotate around");
 		axisList.addActionListener(e ->
@@ -76,7 +77,7 @@ public class RotationPanel extends JPanel implements IValueUpdater
 		axisPanel.setMaximumSize(new Dimension(186, 55));
 		axisPanel.add(axisList);
 
-		Hashtable<Integer, JLabel> labelTable = new Hashtable<Integer, JLabel>();
+		Hashtable<Integer, JLabel> labelTable = new Hashtable<>();
 		labelTable.put(new Integer(-2), new JLabel("-45\u00b0"));
 		labelTable.put(new Integer(-1), new JLabel("-22.5\u00b0"));
 		labelTable.put(new Integer(0), new JLabel("0\u00b0"));
@@ -85,7 +86,7 @@ public class RotationPanel extends JPanel implements IValueUpdater
 
 		sliderPanel = new JPanel(new GridLayout(1, 1));
 		sliderPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(new Color(221, 221, 228), 5), "<html><b>Rotation</b></html>"));
-		rotation = new JSlider(JSlider.HORIZONTAL, ROTATION_MIN, ROTATION_MAX, ROTATION_INIT);
+		rotation = new JSlider(SwingConstants.HORIZONTAL, ROTATION_MIN, ROTATION_MAX, ROTATION_INIT);
 		rotation.setMajorTickSpacing(1);
 		rotation.setPaintTicks(true);
 		rotation.setPaintLabels(true);

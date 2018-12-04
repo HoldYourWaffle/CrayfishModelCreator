@@ -9,8 +9,8 @@ public class TextureAnimation
 {
 	private int width = 16, height = 16;
 	
-	private List<Integer> frames = new ArrayList<Integer>();
-	private Map<Integer, Integer> customTimes = new HashMap<Integer, Integer>();
+	private List<Integer> frames = new ArrayList<>();
+	private Map<Integer, Integer> customTimes = new HashMap<>();
 	private int frametime = 1;
 	private boolean interpolate = false;
 
@@ -37,13 +37,13 @@ public class TextureAnimation
 
 	public void setFrames(List<Integer> frameList)
 	{
-		frames = new ArrayList<Integer>();
+		frames = new ArrayList<>();
 		frames.addAll(frameList);
 	}
 
 	public void setCustomTimes(Map<Integer, Integer> times)
 	{
-		customTimes = new HashMap<Integer, Integer>();
+		customTimes = new HashMap<>();
 		customTimes.putAll(times);
 	}
 

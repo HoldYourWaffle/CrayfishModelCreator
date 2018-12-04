@@ -6,6 +6,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
+import javax.swing.SwingConstants;
 
 import com.mrcrayfish.modelcreator.element.Element;
 import com.mrcrayfish.modelcreator.element.ElementManager;
@@ -51,7 +52,7 @@ public class ElementPanel extends JPanel implements IValueUpdater
 		add(Box.createRigidArea(new Dimension(188, 5)));
 		add(panelExtras);
 		add(Box.createRigidArea(new Dimension(188, 70)));
-		add(new JSeparator(JSeparator.HORIZONTAL));
+		add(new JSeparator(SwingConstants.HORIZONTAL));
 		add(panelGlobal);
 	}
 
